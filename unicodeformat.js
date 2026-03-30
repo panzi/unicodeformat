@@ -390,7 +390,8 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 		const def = definitions[i];
 		const optionEl = document.createElement('option');
 		optionEl.value = def.key;
-		optionEl.title = def.name;
+		const hotkey = i > 9 ? `Ctrl+Alt+${i - 10}` : `Ctrl+${i}`;
+		optionEl.title = `${def.name} (variant: ${def.key}, ${hotkey})`;
 		optionEl.appendChild(document.createTextNode(IS_MOBILE ? def.name : convertStr(def.name, def)));
 		variantEl.appendChild(optionEl);
 	}
