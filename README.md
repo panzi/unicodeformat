@@ -7,6 +7,8 @@ Unicode has multiple sets of latin letters and numbers for various special use
 cases (mainly mathematics). This thing uses this in order to "format" plain
 text.
 
+[Open online version](https://panzi.github.io/unicodeformat/)
+
 Parameters
 ----------
 
