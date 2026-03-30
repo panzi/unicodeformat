@@ -329,6 +329,9 @@ function init() {
 	const variantEl = document.getElementById('variant');
 	const textEl = document.getElementById('text');
 	const copyBtn = document.getElementById('copy-btn');
+	const intentBtn = document.getElementById('intent-btn');
+	const intentUrlInput = document.getElementById('intent-url');
+	const zwSpcBtn = document.getElementById('zero-width-space-btn');
 
 	if (!(variantEl instanceof HTMLSelectElement)) {
 		console.error('variantEl is not a HTMLSelectElement!', variantEl);
@@ -345,6 +348,21 @@ function init() {
 		return;
 	}
 
+	if (!(intentBtn instanceof HTMLButtonElement)) {
+		console.error('intentBtn is not a HTMLButtonElement!', intentBtn);
+		return;
+	}
+
+	if (!(intentUrlInput instanceof HTMLInputElement)) {
+		console.error('intentUrlInput is not a HTMLInputElement!', intentUrlInput);
+		return;
+	}
+
+	if (!(zwSpcBtn instanceof HTMLButtonElement)) {
+		console.error('zwSpcBtn is not a HTMLButtonElement!', zwSpcBtn);
+		return;
+	}
+
 	const growers = document.querySelectorAll(".grow-wrap");
 
 	growers.forEach((grower) => {
@@ -356,15 +374,18 @@ function init() {
 		}
 	});
 
-	initElements(variantEl, textEl, copyBtn);
+	initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn);
 }
 
 /**
  * @param {HTMLSelectElement} variantEl 
  * @param {HTMLTextAreaElement} textEl
  * @param {HTMLButtonElement} copyBtn
+ * @param {HTMLButtonElement} intentBtn
+ * @param {HTMLInputElement} intentUrlInput
+ * @param {HTMLButtonElement} zwSpcBtn
  */
-function initElements(variantEl, textEl, copyBtn) {
+function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn) {
 	for (let i = 0; i < definitions.length; ++ i) {
 		const def = definitions[i];
 		const optionEl = document.createElement('option');
@@ -416,41 +437,64 @@ function initElements(variantEl, textEl, copyBtn) {
 
 	variantEl.addEventListener('change', updateVariant, false);
 
+	/** @param {string} text */
+	function insertText(text) {
+		const selStart = textEl.selectionStart ?? 0;
+		const selEnd = textEl.selectionEnd ?? 0;
+		const str = textEl.value;
+		if (IS_WEBKIT) {
+			document.execCommand('insertText', false, text);
+		}
+		else {
+			textEl.value = str.slice(0, selStart) + text + str.slice(selEnd);
+		}
+		textEl.selectionStart = textEl.selectionEnd = selStart + text.length;
+	}
+
+	zwSpcBtn.addEventListener('click', function (event) {
+		insertText('\u200B');
+	});
+
 	textEl.addEventListener('keydown', function (event) {
-		var character = 0;
+		let character = 0;
 		if (event.key) {
 			if (event.key.length === 1) {
 				character = event.key.charCodeAt(0);
 			}
-		} else if (event.keyIdentifier) {
-			if (event.keyIdentifier.slice(0, 2) === 'U+') {
-				character = parseInt(event.keyIdentifier.slice(2), 16);
-			}
 		}
 
 		if (character && !event.altKey && !event.ctrlKey && !event.metaKey && !event.altGrKey) {
-			var definition = definitionMap[variantEl.value];
+			const definition = definitionMap[variantEl.value];
 			if (character in definition.map) {
 				event.preventDefault();
 				event.stopPropagation();
-				var selStart = textEl.selectionStart ?? 0;
-				var selEnd = textEl.selectionEnd ?? 0;
-				var str = textEl.value;
-				var converted = String.fromCodePoint(definition.map[character]);
-				if (IS_WEBKIT) {
-					document.execCommand('insertText', false, converted);
-				}
-				else {
-					textEl.value = str.slice(0, selStart) + converted + str.slice(selEnd);
-				}
-				textEl.selectionStart = textEl.selectionEnd = selStart + converted.length;
+				const converted = String.fromCodePoint(definition.map[character]);
+				insertText(converted);
 			}
 		}
 	}, true);
 
-	/** @type {ReturnType<typeof setTimeout>?} */
-	let copyTimer = null;
-	copyBtn.addEventListener('click', async function (event) {
+	function performIntent() {
+		let intentUrl = intentUrlInput.value.trim();
+		if (!intentUrl) {
+			alert('Please enter your Mastodon instance URL!');
+			return;
+		}
+		if (intentUrl.startsWith('//')) {
+			intentUrl = `https:${intentUrl}`;
+		} else if (intentUrl.startsWith('/')) {
+			intentUrl = `https:/${intentUrl}`;
+		} else if (!/^[-_a-z0-9]+:/.test(intentUrl)) {
+			intentUrl = `https://${intentUrl}`;
+		}
+		const url = new URL(intentUrl);
+		url.searchParams.set('text', textEl.value);
+		localStorage.setItem('intent-url', intentUrl);
+		//open(url, '_blank');
+		location.href = url.toString();
+	}
+
+	async function copyToClipboard() {
 		await navigator.clipboard.writeText(textEl.value);
 		const { copied, init } = copyBtn.dataset;
 		if (copied) {
@@ -466,9 +510,111 @@ function initElements(variantEl, textEl, copyBtn) {
 				}, 2000);
 			}
 		}
+	}
+
+	textEl.addEventListener('keypress', function (event) {
+		if (event.ctrlKey && event.key === 'Enter') {
+			event.preventDefault();
+			performIntent();
+		}
+	});
+
+	window.addEventListener('keyup', function (event) {
+		const { ctrlKey, altKey, key } = event;
+
+		if (ctrlKey) {
+			if (altKey) {
+				switch (key) {
+					case 'c':
+						event.preventDefault();
+						copyToClipboard();
+						return;
+
+					case 'z':
+						event.preventDefault();
+						insertText('\u200B');
+						return;
+
+					case '+':
+					{
+						event.preventDefault();
+
+						let index = 0;
+						const current = variantEl.value;
+						for (; index < definitions.length; ++ index) {
+							if (definitions[index].key === current) {
+								break;
+							}
+						}
+
+						if (index >= definitions.length) {
+							index = 0;
+						} else {
+							index = (index + 1) % definitions.length;
+						}
+
+						variantEl.value = definitions[index].key;
+						return;
+					}
+					case '-':
+					{
+						event.preventDefault();
+
+						let index = 0;
+						const current = variantEl.value;
+						for (; index < definitions.length; ++ index) {
+							if (definitions[index].key === current) {
+								break;
+							}
+						}
+
+						if (index >= definitions.length) {
+							index = 0;
+						} else {
+							index = index === 0 ? definitions.length - 1 : index - 1;
+						}
+
+						variantEl.value = definitions[index].key;
+						return;
+					}
+				}
+			}
+
+			if (key.length === 1) {
+				const codepoint = key.codePointAt(0) ?? 0;
+				if (codepoint >= 0x30 && codepoint <= 0x39) {
+					let index = codepoint - 0x30;
+
+					if (altKey) {
+						index += 10;
+					}
+
+					if (definitions.length > index) {
+						const def = definitions[index];
+						variantEl.value = def.key;
+					}
+
+					event.preventDefault();
+				}
+			}
+		}
+	});
+
+	if (!intentUrlInput.value.trim()) {
+		intentUrlInput.value = localStorage.getItem('intent-url') || 'https://mastodon.social/';
+	}
+
+	intentBtn.addEventListener('click', function (event) {
+		performIntent();
+	});
+
+	/** @type {ReturnType<typeof setTimeout>?} */
+	let copyTimer = null;
+	copyBtn.addEventListener('click', async function (event) {
+		await copyToClipboard();
 	}, false);
 
-	/** @type {ReturnType<setTimeout>?} */
+	/** @type {ReturnType<typeof setTimeout>?} */
 	let updateTimer = null;
 	function updateFromCursor() {
 		updateTimer = null;
@@ -533,21 +679,6 @@ function initElements(variantEl, textEl, copyBtn) {
 				case "PageUp":
 				case "PageDown":
 				case "Backspace":
-				case "Delete":
-					delayedUpdateFromCursor();
-					break;
-			}
-		} else if (event.keyIdentifier) {
-			switch (event.keyIdentifier) {
-				case "Down":
-				case "Up":
-				case "Left":
-				case "Right":
-				case "Home":
-				case "End":
-				case "PageUp":
-				case "PageDown":
-				case "BackSpace":
 				case "Delete":
 					delayedUpdateFromCursor();
 					break;

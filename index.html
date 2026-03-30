@@ -11,9 +11,45 @@
 		"/>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
 		<style type="text/css">
+			:root {
+				--text-color: #707070;
+				--background-color: white;
+
+				--input-border-color: #c5c5c5;
+				--input-background-color: white;
+				--input-text-color: black;
+
+				--select-text-color: #303030;
+				--select-background-color: #f0f0f0;
+				--select-active-background-color: white;
+
+				--button-text-color: white;
+				--button-border-color: #3f4551;
+				--button-background-color: #50535b;
+				--button-active-background-color: #5e6069;
+			}
+			@media (prefers-color-scheme: dark) {
+				:root {
+					--text-color: #c0c0c0;
+					--background-color: #202125;
+
+					--input-border-color: #444444;
+					--input-background-color: #25262a;
+					--input-text-color: #c0c0c0;
+
+					--select-text-color: #eeeeee;
+					--select-background-color: #202020;
+					--select-active-background-color: #111111;
+
+					--button-border-color: #292e38;
+					--button-background-color: #282b31;
+					--button-active-background-color: #3b3d46;
+				}
+			}
 			body {
 				font-family: 'Open Sans', sans-serif;
-				color: #707070;
+				color: var(--text-color);
+				background-color: var(--background-color);
 				max-width: 800px;
 				margin: auto;
 				padding: 0 1em;
@@ -33,10 +69,6 @@
 			.foot {
 				margin-top: 5px;
 				text-align: right;
-			}
-			select {
-				font-size: 1.1em;
-				height: 1.8em;
 			}
 
 			/* Source: https://chriscoyier.net/2023/09/29/css-solves-auto-expanding-textareas-probably-eventually/ */
@@ -63,28 +95,38 @@
 			}
 			.grow-wrap > textarea,
 			.grow-wrap::after {
-				/* Identical styling required!! */
-				border: 1px solid #c5c5c5;
+				/* Place on top of each other */
+				grid-area: 1 / 1 / 2 / 2;
+			}
+
+			.grow-wrap > textarea,
+			.grow-wrap::after,
+			textarea,
+			input {
+				border: 1px solid var(--input-border-color);
 				border-radius: 4px;
 				padding: 0.5rem;
 				font: inherit;
 				box-sizing: border-box;
 
-				/* Place on top of each other */
-				grid-area: 1 / 1 / 2 / 2;
+				color: var(--input-text-color);
+				background-color: var(--input-background-color);
+				box-shadow: inset 0 0 10px rgba(0,0,0,0.15);
 			}
 
 			select {
+				background-color: var(--select-background-color);
+				color: var(--select-text-color);
+				font-size: 1.1em;
+				height: 1.8em;
 				max-width: 100%;
 				border-radius: 4px;
-				background: #f0f0f0;
 				background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.05));
-				border: 1px solid #c5c5c5;
+				border: 1px solid var(--input-border-color);
 				box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
-				color: #303030;
 			}
 			select:hover {
-				background: white;
+				background: var(--select-active-background-color);
 				background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.15));
 			}
 			button {
@@ -94,17 +136,17 @@
 				padding: 8px 16px;
 				cursor: pointer;
 				border-radius: 4px;
+				color: var(--button-text-color);
+				background-color: var(--button-background-color);
+				border: 1px solid var(--button-border-color);
+				box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
 			}
-			#copy-btn {
-				color: #ffffff;
-				background-color: #2f2f2f;
-				background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.05));
-				border: 1px solid #3f3f3f;
-				box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+			button:hover {
+				background-color: var(--button-active-background-color);
 			}
-			#copy-btn:hover {
-				background-color: #525252;
-				background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.15));
+
+			.foot form {
+				display: inline;
 			}
 		</style>
 		<script type="text/javascript" src="unicodeformat.js"></script>
@@ -113,14 +155,22 @@
 	<body onload="init();">
 		<h1>Format plain text with Unicode</h1>
 
-		<div class="header"><select id="variant"></select></div>
+		<div class="header">
+			<select id="variant"></select>
+			<button type="button" id="zero-width-space-btn" title="Insert Zero-Width Space (Ctrl+Alt+Z)">Zero-Width Space</button>
+		</div>
 
 		<div class="grow-wrap">
 			<textarea id="text" placeholder="Type your message here…" autocomplete="off" autofocus></textarea>
 		</div>
 
 		<div class="foot">
-			<button type="button" id="copy-btn" data-init="Copy" data-copied="Copied ✅">Copy</button>
+			<form action="javascript:void(0)">
+				<input type="url" id="intent-url" autocomplete="on" placeholder="https://mastodon.social/" title="Mastodon Instance URL" required />
+				<button type="submit" id="intent-btn" title="Post on Mastodon (Ctrl+Enter)">Toot</button>
+			</form>
+
+			<button type="button" id="copy-btn" data-init="Copy" data-copied="Copied ✅" title="Copy whole text to clipboard (Ctrl+Alt+C)">Copy</button>
 		</div>
 	</body>
 </html>

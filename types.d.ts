@@ -14,6 +14,5 @@ type DefinitionInit = Omit<Definition, 'map'> & { map?: { [codepoint: number]: n
 
 
 interface KeyboardEvent {
-    keyIdentifier?: string;
     altGrKey?: boolean;
 }
