@@ -9,9 +9,7 @@ interface Definition {
     map: { [codepoint: number]: number }
 }
 
-
 type DefinitionInit = Omit<Definition, 'map'> & { map?: { [codepoint: number]: number } };
-
 
 interface KeyboardEvent {
     altGrKey?: boolean;

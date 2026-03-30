@@ -457,10 +457,8 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 
 	textEl.addEventListener('keydown', function (event) {
 		let character = 0;
-		if (event.key) {
-			if (event.key.length === 1) {
-				character = event.key.charCodeAt(0);
-			}
+		if (event.key.length === 1) {
+			character = event.key.charCodeAt(0);
 		}
 
 		if (character && !event.altKey && !event.ctrlKey && !event.metaKey && !event.altGrKey) {
@@ -690,4 +688,23 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 	textEl.addEventListener('cut',   delayedUpdateFromCursor, false);
 	textEl.addEventListener('drop',  delayedUpdateFromCursor, false);
 	textEl.addEventListener('click', immediateUpdateFromCursor, false);
+
+	{
+		const url = new URL(location.href);
+		const text = url.searchParams.get('text');
+		if (text) {
+			const variant = url.searchParams.get('variant');
+			/** @type {Definition} */
+			let def;
+			if (variant && variant in definitionMap && (def = definitionMap[variant]) && def) {
+				variantEl.value = variant;
+				textEl.value = convertStr(text, def);
+			} else {
+				textEl.value = text;
+			}
+
+			textEl.focus();
+			textEl.select();
+		}
+	}
 }
