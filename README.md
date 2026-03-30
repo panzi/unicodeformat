@@ -19,6 +19,10 @@ You can pre-fill the text and apply a format to it with these parameters:
 | `text`    | The text to load. |
 | `variant` | The "formatting". Hover the options of the select box to see possible values. You can also use this to clear any formatting by passing `ascii`. |
 
+### Example
+
+<https://panzi.github.io/unicodeformat/?text=example&variant=mathBoldScript>
+
 Hotkeys
 -------
 
