@@ -1,3 +1,4 @@
+/// <reference path="./types.d.ts" />
 
 "use strict";
 
@@ -692,13 +693,14 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 
 	{
 		const url = new URL(location.href);
+		const variant = url.searchParams.get('variant');
+		const def = variant && variant in definitionMap && definitionMap[variant];
+		if (def) {
+			variantEl.value = variant;
+		}
 		const text = url.searchParams.get('text');
 		if (text) {
-			const variant = url.searchParams.get('variant');
-			/** @type {Definition} */
-			let def;
-			if (variant && variant in definitionMap && (def = definitionMap[variant]) && def) {
-				variantEl.value = variant;
+			if (def) {
 				textEl.value = convertStr(text, def);
 			} else {
 				textEl.value = text;

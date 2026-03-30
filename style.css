@@ -1,0 +1,172 @@
+
+:root {
+    --text-color: #707070;
+    --background-color: white;
+
+    --input-border-color: #c5c5c5;
+    --input-background-color: white;
+    --input-text-color: black;
+
+    --select-text-color: #303030;
+    --select-background-color: #f0f0f0;
+    --select-active-background-color: white;
+
+    --button-text-color: white;
+    --button-border-color: #3f4551;
+    --button-background-color: #50535b;
+    --button-active-background-color: #5e6069;
+
+    --link-color: #2c2ce3;
+    --link-visited-color: #6c1ef1;
+
+    --outline-color: rgba(42, 42, 255, 0.6);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #c0c0c0;
+        --background-color: #202125;
+
+        --input-border-color: #444444;
+        --input-background-color: #25262a;
+        --input-text-color: #c0c0c0;
+
+        --select-text-color: #eeeeee;
+        --select-background-color: #202020;
+        --select-active-background-color: #111111;
+
+        --button-border-color: #292e38;
+        --button-background-color: #282b31;
+        --button-active-background-color: #3b3d46;
+
+        --link-color: #6161f8;
+        --link-visited-color: #9053f9;
+    }
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    max-width: 800px;
+    margin: auto;
+    padding: 0 1em;
+}
+:focus-visible {
+    outline-style: solid;
+    outline-width: 2px;
+    outline-color: var(--outline-color);
+    outline-offset: 1px;
+}
+a {
+    text-decoration: none;
+    color: var(--link-color);
+}
+a:hover,
+a:focus {
+    text-decoration: underline;
+}
+a:visited {
+    color: var(--link-visited-color);
+}
+h1 {
+    margin: 0.5em 0;
+    font-size: 1.6em;
+}
+#text {
+    width: 100%;
+    min-height: 8em;
+}
+.header {
+    white-space: nowrap;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+.header a {
+    border: 1px none transparent;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+.foot {
+    margin-top: 5px;
+    text-align: right;
+}
+
+/* Source: https://chriscoyier.net/2023/09/29/css-solves-auto-expanding-textareas-probably-eventually/ */
+.grow-wrap {
+    /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+    display: grid;
+}
+.grow-wrap::after {
+    /* Note the weird space! Needed to preventy jumpy behavior */
+    content: attr(data-replicated-value) " ";
+
+    /* This is how textarea text behaves */
+    white-space: pre-wrap;
+
+    /* Hidden from view, clicks, and screen readers */
+    visibility: hidden;
+}
+.grow-wrap > textarea {
+    /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+    resize: none;
+
+    /* Firefox shows scrollbar on growth, you can hide like this. */
+    overflow: hidden;
+}
+.grow-wrap > textarea,
+.grow-wrap::after {
+    /* Place on top of each other */
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+.grow-wrap > textarea,
+.grow-wrap::after,
+textarea,
+input {
+    border: 1px solid var(--input-border-color);
+    border-radius: 4px;
+    padding: 0.5rem;
+    font: inherit;
+    box-sizing: border-box;
+
+    color: var(--input-text-color);
+    background-color: var(--input-background-color);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.15);
+    outline: none;
+}
+
+select {
+    background-color: var(--select-background-color);
+    color: var(--select-text-color);
+    font-size: 1.1em;
+    height: 1.8em;
+    max-width: 100%;
+    border-radius: 4px;
+    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.05));
+    border: 1px solid var(--input-border-color);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+}
+select:hover {
+    background: var(--select-active-background-color);
+    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.15));
+}
+button {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    color: var(--button-text-color);
+    background-color: var(--button-background-color);
+    border: 1px solid var(--button-border-color);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+}
+button:hover {
+    background-color: var(--button-active-background-color);
+}
+
+.foot form {
+    display: inline;
+}
