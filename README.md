@@ -30,6 +30,8 @@ Hotkeys
 | :----- | :---------- |
 | `Ctrl`+`0` ... `Ctrl`+`9` | Select format 1 to 10. |
 | `Ctrl`+`Alt`+`0` ... `Ctrl`+`Alt`+`6` | Select format 11 to 16. |
+| `Ctrl`+`ArrowDown` | Select next format. |
+| `Ctrl`+`ArrowUp` | Select previous format. |
 | `Ctrl`+`Alt`+`C` | Copy whole text to clipboard. |
 | `Ctrl`+`Alt`+`Z` | Insert zero-width space. This is useful when you want to make a hashtag out of a plural word, but that hashtag shouldn't contain the s. [#example](https://example.com/)s |
 | `Ctrl`+`Enter` | Post on Mastodon. |

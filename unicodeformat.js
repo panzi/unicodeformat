@@ -506,68 +506,96 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 	textEl.addEventListener('keypress', function (event) {
 		if (event.ctrlKey && event.key === 'Enter') {
 			event.preventDefault();
+			event.stopPropagation();
 			performIntent();
 		}
-	});
+	}, true);
+
+	window.addEventListener('keydown', function (event) {
+		const { ctrlKey, key } = event;
+
+		if (ctrlKey) {
+			switch (key) {
+				case 'ArrowDown':
+				case 'ArrowUp':
+					event.preventDefault();
+					event.stopPropagation();
+					break;
+			}
+		}
+	}, true);
 
 	window.addEventListener('keyup', function (event) {
 		const { ctrlKey, altKey, key } = event;
 
 		if (ctrlKey) {
+			switch (key) {
+				case 'ArrowDown':
+				{
+					event.preventDefault();
+					event.stopPropagation();
+
+					let index = 0;
+					const current = variantEl.value;
+					for (; index < definitions.length; ++ index) {
+						if (definitions[index].key === current) {
+							break;
+						}
+					}
+
+					if (index >= definitions.length) {
+						console.error(index, definitions.length)
+						index = 0;
+					} else {
+						index = (index + 1) % definitions.length;
+					}
+
+					variantEl.value = definitions[index].key;
+					updateVariant();
+					return;
+				}
+
+				case 'ArrowUp':
+				{
+					event.preventDefault();
+					event.stopPropagation();
+
+					let index = 0;
+					const current = variantEl.value;
+					for (; index < definitions.length; ++ index) {
+						if (definitions[index].key === current) {
+							break;
+						}
+					}
+
+					if (index >= definitions.length) {
+						console.error(index, definitions.length)
+						index = 0;
+					} else {
+						index = index === 0 ? definitions.length - 1 : index - 1;
+					}
+
+					variantEl.value = definitions[index].key;
+					updateVariant();
+					return;
+				}
+			}
+
 			if (altKey) {
 				switch (key) {
 					case 'c':
 						event.preventDefault();
+						event.stopPropagation();
+
 						copyToClipboard();
 						return;
 
 					case 'z':
 						event.preventDefault();
+						event.stopPropagation();
+
 						insertText('\u200B');
 						return;
-
-					case '+':
-					{
-						event.preventDefault();
-
-						let index = 0;
-						const current = variantEl.value;
-						for (; index < definitions.length; ++ index) {
-							if (definitions[index].key === current) {
-								break;
-							}
-						}
-
-						if (index >= definitions.length) {
-							index = 0;
-						} else {
-							index = (index + 1) % definitions.length;
-						}
-
-						variantEl.value = definitions[index].key;
-						return;
-					}
-					case '-':
-					{
-						event.preventDefault();
-
-						let index = 0;
-						const current = variantEl.value;
-						for (; index < definitions.length; ++ index) {
-							if (definitions[index].key === current) {
-								break;
-							}
-						}
-
-						if (index >= definitions.length) {
-							index = 0;
-						} else {
-							index = index === 0 ? definitions.length - 1 : index - 1;
-						}
-
-						variantEl.value = definitions[index].key;
-						return;
-					}
 				}
 			}
 
@@ -586,10 +614,11 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 					}
 
 					event.preventDefault();
+					event.stopPropagation();
 				}
 			}
 		}
-	});
+	}, true);
 
 	if (!intentUrlInput.value.trim()) {
 		intentUrlInput.value = localStorage.getItem('intent-url') || 'https://mastodon.social/';
