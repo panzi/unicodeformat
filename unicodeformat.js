@@ -611,6 +611,7 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 					if (definitions.length > index) {
 						const def = definitions[index];
 						variantEl.value = def.key;
+						updateVariant();
 					}
 
 					event.preventDefault();
