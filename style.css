@@ -146,6 +146,10 @@ button {
     max-width: 100%;
 }
 
+input[type=url] {
+    width: 16em;
+}
+
 h1,
 button {
     overflow: hidden;
