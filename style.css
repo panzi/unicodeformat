@@ -76,20 +76,24 @@ h1 {
     min-height: 8em;
 }
 .header {
-    white-space: nowrap;
     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
-    gap: 1em;
+    flex-wrap: wrap;
+    gap: 0.5em;
 }
 .header a {
     border: 1px none transparent;
-    padding: 8px 16px;
+    padding: 8px;
     border-radius: 4px;
 }
 .foot {
     margin-top: 5px;
-    text-align: right;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: end;
+    gap: 0.5em;
 }
 
 /* Source: https://chriscoyier.net/2023/09/29/css-solves-auto-expanding-textareas-probably-eventually/ */
@@ -136,11 +140,22 @@ input {
     outline: none;
 }
 
+input,
+textarea,
+button {
+    max-width: 100%;
+}
+
+h1,
+button {
+    overflow: hidden;
+}
+
 select {
     background-color: var(--select-background-color);
     color: var(--select-text-color);
-    font-size: 1.1em;
-    height: 1.8em;
+    font-size: 14px;
+    padding: 8px 16px;
     max-width: 100%;
     border-radius: 4px;
     background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.05));

@@ -611,6 +611,7 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 	/** @type {ReturnType<typeof setTimeout>?} */
 	let copyTimer = null;
 	copyBtn.addEventListener('click', async function (event) {
+		event.preventDefault();
 		await copyToClipboard();
 	}, false);
 

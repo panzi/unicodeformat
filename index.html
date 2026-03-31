@@ -18,10 +18,8 @@
 		<h1>Format plain text with Unicode</h1>
 
 		<div class="header">
-			<span>
-				<select id="variant"></select>
-				<button type="button" id="zero-width-space-btn" title="Insert Zero-Width Space (Ctrl+Alt+Z)">Zero-Width Space</button>
-			</span>
+			<select id="variant"></select>
+			<button type="button" id="zero-width-space-btn" title="Insert Zero-Width Space (Ctrl+Alt+Z)">Zero-Width Space</button>
 			<span style="flex-grow: 1;"></span>
 			<a href="https://github.com/panzi/unicodeformat/">Info</a>
 		</div>
@@ -30,13 +28,10 @@
 			<textarea id="text" placeholder="Type your message here…" autocomplete="off" autofocus></textarea>
 		</div>
 
-		<div class="foot">
-			<form action="javascript:void(0)">
-				<input type="url" id="intent-url" autocomplete="on" placeholder="https://mastodon.social/" title="Mastodon Instance URL" required />
-				<button type="submit" id="intent-btn" title="Post on Mastodon (Ctrl+Enter)">Toot</button>
-			</form>
-
+		<form class="foot" action="javascript:void(0)">
+			<input type="url" id="intent-url" autocomplete="on" placeholder="https://mastodon.social/" title="Mastodon Instance URL" required />
+			<button type="submit" id="intent-btn" title="Post on Mastodon (Ctrl+Enter)">Toot</button>
 			<button type="button" id="copy-btn" data-init="Copy" data-copied="Copied ✅" title="Copy whole text to clipboard (Ctrl+Alt+C)">Copy</button>
-		</div>
+		</form>
 	</body>
 </html>
