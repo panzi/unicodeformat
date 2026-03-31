@@ -13,10 +13,11 @@ function detectMobile() {
  * @returns {number}
  */
 function convertChar(character, definition) {
+	const { map } = definition;
 	if (character in TO_ASCII) {
-		var ascii = TO_ASCII[character];
-		if (ascii in definition.map) {
-			return definition.map[ascii];
+		const ascii = TO_ASCII[character];
+		if (ascii in map) {
+			return map[ascii];
 		} else {
 			return ascii;
 		}
@@ -29,28 +30,18 @@ function convertChar(character, definition) {
  * @param {Definition} definition
  */
 function convertStr(str, definition) {
-	var codePoints = [];
-	/*
-	for (var ch of str) {
-		codePoints.push(convertChar(ch.codePointAt(0), definition));
-	}
-	*/
-	for (var i = 0; i < str.length;) {
-		var first, codePoint;
-		codePoint = first = str.charCodeAt(i);
-		if (first >= 0xD800 && first <= 0xDBFF) {
-			++ i;
-			var second = str.charCodeAt(i);
-			if (second >= 0xDC00 && second <= 0xDFFF) {
-				++ i;
-				codePoint = (first - 0xD800) * 0x400 + second - 0xDC00 + 0x10000;
-			}
-		} else {
-			++ i;
-		}
+	/** @type {number[]} */
+	const codePoints = [];
+	for (let i = 0; i < str.length;) {
+		/** @type {number=} */
+		const codePoint = str.codePointAt(i);
+		if (codePoint === undefined) break;
+
 		codePoints.push(convertChar(codePoint, definition));
+
+		i += codePoint >= 0x010000 ? 2 : 1;
 	}
-	return String.fromCodePoint.apply(String, codePoints);
+	return String.fromCodePoint(...codePoints);
 }
 
 /** @type {{[codepoint: number]: boolean}} */
@@ -251,7 +242,7 @@ const definitionInits = [
 ];
 
 /** @type {{[codepoint: number]: number}} */
-var TO_ASCII = {};
+const TO_ASCII = {};
 
 // Process in reverse order so redundant usage of code points for numbers will
 // be overwritten with the correct ones, which come before in this list.
@@ -323,8 +314,8 @@ for (let i = definitionInits.length - 1; i >= 0; -- i) {
 }
 definitions.reverse();
 
-var IS_WEBKIT = navigator.userAgent.indexOf('WebKit') >= 0;
-var IS_MOBILE = detectMobile();
+const IS_WEBKIT = navigator.userAgent.indexOf('WebKit') >= 0;
+const IS_MOBILE = detectMobile();
 
 function init() {
 	const variantEl = document.getElementById('variant');
@@ -619,7 +610,7 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 	let updateTimer = null;
 	function updateFromCursor() {
 		updateTimer = null;
-		var str = textEl.value;
+		const str = textEl.value;
 		if (str.length > 0) {
 			const selEnd = textEl.selectionEnd ?? 0;
 			/** @type {number=} */
@@ -630,9 +621,9 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 					codePoint = str.codePointAt(index);
 					break;
 				} else {
-					var second = codePoint = str.charCodeAt(index - 1);
+					const second = codePoint = str.charCodeAt(index - 1);
 					if (second >= 0xDC00 && second <= 0xDFFF && index > 1) {
-						var first = str.charCodeAt(index - 2);
+						const first = str.charCodeAt(index - 2);
 						if (first >= 0xD800 && first <= 0xDBFF) {
 							codePoint = (first - 0xD800) * 0x400 + second - 0xDC00 + 0x10000;
 							index -= 2;
