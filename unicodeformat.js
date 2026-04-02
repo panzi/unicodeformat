@@ -612,13 +612,22 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 		await copyToClipboard();
 	}, false);
 
-	/** @type {ReturnType<typeof setTimeout>?} */
-	let updateTimer = null;
+	let oldSelectionStart = 0;
+	let oldSelectionEnd = 0;
+
 	function updateFromCursor() {
-		updateTimer = null;
 		const str = textEl.value;
 		if (str.length > 0) {
 			const selEnd = textEl.selectionEnd ?? 0;
+			const selStart = textEl.selectionStart ?? 0;
+
+			if (oldSelectionEnd === selEnd && oldSelectionStart === selStart) {
+				return;
+			}
+
+			oldSelectionStart = selStart;
+			oldSelectionEnd = selEnd;
+
 			/** @type {number=} */
 			let codePoint;
 			let index = selEnd ?? 0;
@@ -648,46 +657,13 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 				variantEl.value = def.key;
 				variantEl.title = def.name;
 			}
+		} else {
+			oldSelectionStart = 0;
+			oldSelectionEnd = 0;
 		}
 	}
 
-	function immediateUpdateFromCursor() {
-		if (updateTimer !== null) {
-			clearTimeout(updateTimer);
-		}
-		updateFromCursor();
-	}
-
-	function delayedUpdateFromCursor() {
-		if (updateTimer !== null) {
-			clearTimeout(updateTimer);
-		}
-		updateTimer = setTimeout(updateFromCursor, 0);
-	}
-
-	textEl.addEventListener('keyup', function (event) {
-		if (event.key) {
-			switch (event.key) {
-				case "ArrowDown":
-				case "ArrowUp":
-				case "ArrowLeft":
-				case "ArrowRight":
-				case "Home":
-				case "End":
-				case "PageUp":
-				case "PageDown":
-				case "Backspace":
-				case "Delete":
-					delayedUpdateFromCursor();
-					break;
-			}
-		}
-	}, false);
-
-	textEl.addEventListener('paste', delayedUpdateFromCursor, false);
-	textEl.addEventListener('cut',   delayedUpdateFromCursor, false);
-	textEl.addEventListener('drop',  delayedUpdateFromCursor, false);
-	textEl.addEventListener('click', immediateUpdateFromCursor, false);
+	textEl.addEventListener('selectionchange', updateFromCursor, false);
 
 	{
 		const url = new URL(location.href);
