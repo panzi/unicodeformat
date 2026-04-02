@@ -232,7 +232,19 @@ const definitionInits = [
 		key: 'parenthesized',
 		name: 'Parenthesized',
 		lowerCase: 9372,
-		upperCase: 127248
+		upperCase: 127248,
+		map: {
+			// no zero
+			49: 9332,
+			50: 9333,
+			51: 9334,
+			52: 9335,
+			53: 9336,
+			54: 9337,
+			55: 9338,
+			56: 9339,
+			57: 9340,
+		}
 	}
 ];
 
