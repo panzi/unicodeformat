@@ -100,4 +100,4 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 
 ### Example
 
-<https://panzi.github.io/unicodeformat/?text=example&variant=mathBoldScript>
+<https://panzi.github.io/unicodeformat/?text=hello%20wörld&family=mathScript&bold=true&italic=true>
