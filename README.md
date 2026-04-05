@@ -58,9 +58,9 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 𝖬𝖺𝗍𝗁𝖾𝗆𝖺𝗍𝗂𝖼𝖺𝗅 𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿 | `mathSans` | ✅ | ✅ | ✅ | `Ctrl`+`4` |
 | 𝙼𝚊𝚝𝚑𝚎𝚖𝚊𝚝𝚒𝚌𝚊𝚕 𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎 | `mathMono` | | | | `Ctrl`+`5` |
 | Ｆｕｌｌｗｉｄｔｈ | `fullwidth` | | | | `Ctrl`+`6` |
-| Ⓒⓘⓡⓒⓛⓔⓓ | circled | | | | `Ctrl`+`7` |
+| Ⓒⓘⓡⓒⓛⓔⓓ | `circled` | | | | `Ctrl`+`7` |
 | 🅝🅔🅖🅐🅣🅘🅥🅔 🅒🅘🅡🅒🅛🅔🅓 | `negativeCircled` | | | | `Ctrl`+`8` |
-| 🅂🅀🅄🄰🅁🄴🄳 | squared | | | | `Ctrl`+`9` |
+| 🅂🅀🅄🄰🅁🄴🄳 | `squared` | | | | `Ctrl`+`9` |
 | 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳 | `negativeSquared` | | | | `Ctrl`+`Alt`+`0` |
 | 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟ | `parenthesized` | | | | `Ctrl`+`Alt`+`1` |
 
