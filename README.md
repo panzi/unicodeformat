@@ -101,3 +101,5 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 ### Example
 
 <https://panzi.github.io/unicodeformat/?text=hello%20wörld&family=mathScript&bold=true&italic=true>
+
+<https://panzi.github.io/unicodeformat/?text=%F0%9D%93%B1%F0%9D%93%AE%F0%9D%93%B5%F0%9D%93%B5%F0%9D%93%B8%20%F0%9D%94%80%F0%9D%93%B8%CC%88%F0%9D%93%BB%F0%9D%93%B5%F0%9D%93%AD&variant=ascii>
