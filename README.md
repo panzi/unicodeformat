@@ -40,10 +40,12 @@ You can pre-fill the text and apply a format to it with these parameters:
 | Parameter | Description |
 | :-------- | :---------- |
 | `text`    | The text to load. |
-| `family`  | See below for possible values. |
+| `family`  | See [below](#family-parameter) for possible values. |
 | `bold`    | `true` or `false`. |
 | `italic`  | `true` or `false`. |
-| `variant` | `family`+`bold`+`italic` in one. See below for possible values. You can also use this to clear any formatting by passing `ascii`. |
+| `variant` | `family`+`bold`+`italic` in one. See [below](#variant-parameter) for possible values. You can also use this to clear any formatting by passing `ascii`. |
+
+### Family Parameter
 
 <!--
 groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),'|',d.key,'|',i > 9 ? `\`Ctrl\`+\`Alt\`+\`${i - 10}\`` : `\`Ctrl\`+\`${i}\``,'|'))
@@ -63,6 +65,8 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 🅂🅀🅄🄰🅁🄴🄳 | `squared` | | | | `Ctrl`+`9` |
 | 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳 | `negativeSquared` | | | | `Ctrl`+`Alt`+`0` |
 | 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟ | `parenthesized` | | | | `Ctrl`+`Alt`+`1` |
+
+### Variant Parameter
 
 | Variant | Parameter Value |
 | :------ | :-------------- |
@@ -98,7 +102,7 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 [^8]: Uses "Black-Letter" to for the missing letters (C, H, I, R, Z).
 [^9]: Uses "Script" to for the missing letters (B, E, F, H, I, L, M, R, e, g, o).
 
-### Example
+### Examples
 
 <https://panzi.github.io/unicodeformat/?text=hello%20wörld&family=mathScript&bold=true&italic=true>
 
