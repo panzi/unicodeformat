@@ -40,13 +40,29 @@ You can pre-fill the text and apply a format to it with these parameters:
 | Parameter | Description |
 | :-------- | :---------- |
 | `text`    | The text to load. |
-| `family`  | 
-| `variant` | The "formatting". See below for possible values. You can also use this to clear any formatting by passing `ascii`. |
+| `family`  | See below for possible values. |
+| `bold`    | `true` or `false`. |
+| `italic`  | `true` or `false`. |
+| `variant` | `family`+`bold`+`italic` in one. See below for possible values. You can also use this to clear any formatting by passing `ascii`. |
 
 <!--
-generated with:
-definitions.forEach((d,i) => console.log('|',convertStr(d.name,d),'|',d.key,'|',i > 9 ? `\`Ctrl\`+\`Alt\`+\`${i - 10}\`` : `\`Ctrl\`+\`${i}\``,'|'))
+groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),'|',d.key,'|',i > 9 ? `\`Ctrl\`+\`Alt\`+\`${i - 10}\`` : `\`Ctrl\`+\`${i}\``,'|'))
 -->
+
+| Family | Parameter Value | **B** | *I* | ***BI*** | Hotkey |
+| :----- | :-------------- | :---- | :-- | :------- | :----- |
+| Normal | `ascii` | ✅ | ✅ | ✅ | `Ctrl`+`0` |
+| 𝕄𝕒𝕥𝕙𝕖𝕞𝕒𝕥𝕚𝕔𝕒𝕝 𝔻𝕠𝕦𝕓𝕝𝕖-𝕊𝕥𝕣𝕦𝕔𝕜 | `mathDoubleStruck` | ❌ | ❌ | ❌ | `Ctrl`+`1` |
+| 𝔐𝔞𝔱𝔥𝔢𝔪𝔞𝔱𝔦𝔠𝔞𝔩 𝔉𝔯𝔞𝔨𝔱𝔲𝔯 | `mathFrakt` | ✅ | ❌ | ❌ | `Ctrl`+`2` |
+| ℳ𝒶𝓉𝒽ℯ𝓂𝒶𝓉𝒾𝒸𝒶𝓁 𝒮𝒸𝓇𝒾𝓅𝓉 | `mathScript` | ✅ | ❌ | ❌ | `Ctrl`+`3` |
+| 𝖬𝖺𝗍𝗁𝖾𝗆𝖺𝗍𝗂𝖼𝖺𝗅 𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿 | `mathSans` | ✅ | ✅ | ✅ | `Ctrl`+`4` |
+| 𝙼𝚊𝚝𝚑𝚎𝚖𝚊𝚝𝚒𝚌𝚊𝚕 𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎 | `mathMono` | ❌ | ❌ | ❌ | `Ctrl`+`5` |
+| Ｆｕｌｌｗｉｄｔｈ | `fullwidth` | ❌ | ❌ | ❌ | `Ctrl`+`6` |
+| Ⓒⓘⓡⓒⓛⓔⓓ | circled | ❌ | ❌ | ❌ | `Ctrl`+`7` |
+| 🅝🅔🅖🅐🅣🅘🅥🅔 🅒🅘🅡🅒🅛🅔🅓 | `negativeCircled` | ❌ | ❌ | ❌ | `Ctrl`+`8` |
+| 🅂🅀🅄🄰🅁🄴🄳 | squared | ❌ | ❌ | ❌ | `Ctrl`+`9` |
+| 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳 | `negativeSquared` | ❌ | ❌ | ❌ | `Ctrl`+`Alt`+`0` |
+| 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟ | `parenthesized` | ❌ | ❌ | ❌ | `Ctrl`+`Alt`+`1` |
 
 | Variant | Parameter Value |
 | :------ | :-------------- |

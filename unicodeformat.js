@@ -3,36 +3,28 @@
 "use strict";
 
 /**
- * @param {number} character
- * @param {Definition} definition
- * @returns {number}
- */
-function convertChar(character, definition) {
-	const { map } = definition;
-	if (character in TO_ASCII) {
-		const ascii = TO_ASCII[character];
-		if (ascii in map) {
-			return map[ascii];
-		} else {
-			return ascii;
-		}
-	}
-	return character;
-}
-
-/**
  * @param {string} str
  * @param {Definition} definition
  */
 function convertStr(str, definition) {
 	/** @type {number[]} */
 	const codePoints = [];
+	const { map } = definition;
+	str = str.normalize('NFD');
 	for (let i = 0; i < str.length;) {
-		/** @type {number=} */
 		const codePoint = str.codePointAt(i);
 		if (codePoint === undefined) break;
 
-		codePoints.push(convertChar(codePoint, definition));
+		/** @type {number} */
+		let converted = codePoint;
+		if (codePoint in TO_ASCII) {
+			const ascii = TO_ASCII[codePoint];
+			if (ascii in map) {
+				converted = map[ascii];
+			}
+		}
+
+		codePoints.push(converted);
 
 		i += codePoint >= 0x010000 ? 2 : 1;
 	}
@@ -56,6 +48,7 @@ const ASCII = {
 	greekLowerCase: 0x3B1,
 	greekUpperCase: 0x391,
 	digits: 48,
+	regular: 'ascii',
 	bold: 'mathBold',
 	italic: 'mathItalic',
 	boldItalic: 'mathBoldItalic',
@@ -342,9 +335,6 @@ const definitionInits = [
 /** @type {{[codepoint: number]: number}} */
 const TO_ASCII = {};
 
-/** @type {FontGroup[]} */
-const groups = [];
-
 /** @type {{[key: string]: FontGroup}} */
 const groupMap = {};
 
@@ -368,10 +358,10 @@ for (let i = definitionInits.length - 1; i >= 0; -- i) {
 		group = groupMap[groupKey];
 	} else {
 		group = groupMap[groupKey] = {
+			order: -1,
 			name: init.name,
 			key: groupKey,
 		};
-		groups.push(group);
 	}
 
 	if (init.isBold && init.isItalic) {
@@ -465,7 +455,18 @@ for (let i = definitionInits.length - 1; i >= 0; -- i) {
 	}
 }
 definitions.reverse();
-groups.reverse();
+
+/** @type {FontGroup[]} */
+const groups = [];
+
+for (const def of definitions) {
+	const groupKey = def.regular ?? def.key;
+	const group = groupMap[groupKey];
+	if (group.order < 0) {
+		group.order = groups.length;
+		groups.push(group);
+	}
+}
 
 function init() {
 	const variantEl = document.getElementById('variant');
@@ -628,19 +629,26 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 	});
 
 	textEl.addEventListener('keydown', function (event) {
-		let character = 0;
-		if (event.key.length === 1) {
-			character = event.key.charCodeAt(0);
+		const { key } = event;
+		if (key.length !== 1 || event.altKey || event.ctrlKey || event.metaKey || event.altGrKey) {
+			return;
 		}
 
-		if (character && !event.altKey && !event.ctrlKey && !event.metaKey && !event.altGrKey) {
-			const definition = definitionMap[variantEl.value];
-			if (character in definition.map) {
-				event.preventDefault();
-				event.stopPropagation();
-				const converted = String.fromCodePoint(definition.map[character]);
-				insertText(converted);
-			}
+		const decomp = key.normalize('NFD');
+		const character = decomp.codePointAt(0);
+
+		if (!character) {
+			return;
+		}
+
+		const definition = definitionMap[variantEl.value];
+		const { map } = definition;
+
+		if (Object.hasOwn(map, character)) {
+			event.preventDefault();
+			event.stopPropagation();
+			const converted = String.fromCodePoint(map[character]) + decomp.slice(1);
+			insertText(converted);
 		}
 	}, true);
 
