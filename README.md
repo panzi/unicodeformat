@@ -9,6 +9,14 @@ text.
 
 [Open online version](https://panzi.github.io/unicodeformat/)
 
+**NOTE:** Keep in mind that writing something with these Unicode symbols messes
+with certain screen readers and accesibility software. Meaning blind people
+probably can't read text formatted this way. So only use it where this is not
+an issue.
+
+You can use this tool to convert such formatted text back to plain text, though.
+So in that way it can help with accesibility.
+
 Parameters
 ----------
 
