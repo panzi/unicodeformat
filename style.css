@@ -9,12 +9,13 @@
 
     --select-text-color: #303030;
     --select-background-color: #f0f0f0;
-    --select-active-background-color: white;
+    --select-hover-background-color: white;
 
     --button-text-color: white;
     --button-border-color: #3f4551;
     --button-background-color: #50535b;
-    --button-active-background-color: #5e6069;
+    --button-hover-background-color: #5e6069;
+    --button-active-background-color: #37393f;
 
     --link-color: #2c2ce3;
     --link-visited-color: #6c1ef1;
@@ -32,11 +33,12 @@
 
         --select-text-color: #eeeeee;
         --select-background-color: #202020;
-        --select-active-background-color: #111111;
+        --select-hover-background-color: #111111;
 
         --button-border-color: #292e38;
         --button-background-color: #282b31;
-        --button-active-background-color: #3b3d46;
+        --button-hover-background-color: #3b3d46;
+        --button-active-background-color: #17181c;
 
         --link-color: #6161f8;
         --link-visited-color: #9053f9;
@@ -80,7 +82,7 @@ h1 {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.5em;
+    gap: 0.25em;
 }
 .header a {
     border: 1px none transparent;
@@ -93,7 +95,7 @@ h1 {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: end;
-    gap: 0.5em;
+    gap: 0.25em;
 }
 
 /* Source: https://chriscoyier.net/2023/09/29/css-solves-auto-expanding-textareas-probably-eventually/ */
@@ -167,23 +169,66 @@ select {
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
 }
 select:hover {
-    background: var(--select-active-background-color);
+    background: var(--select-hover-background-color);
     background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.15));
 }
+
+.thin-btn {
+    padding: 8px;
+}
+
+.toggle {
+    appearance: none;
+}
+
+.toggle:checked {
+    padding: 9px 7px 7px 9px;
+    background-color: var(--button-active-background-color);
+}
+
+#bold::after {
+    content: "B";
+    font-weight: bold;
+}
+
+#italic::after {
+    content: "I";
+    font-style: italic;
+}
+
+#bold,
+#italic {
+    font-family: 'Open Serif', serif;
+}
+
 button {
+    padding: 8px 16px;
+}
+
+button,
+.toggle {
     display: inline-block;
     font-size: 14px;
     font-weight: bold;
-    padding: 8px 16px;
     cursor: pointer;
     border-radius: 4px;
     color: var(--button-text-color);
     background-color: var(--button-background-color);
     border: 1px solid var(--button-border-color);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    box-sizing: border-box;
+    margin: 0;
 }
-button:hover {
-    background-color: var(--button-active-background-color);
+button:not(:disabled):hover,
+.toggle:not(:disabled):hover {
+    background-color: var(--button-hover-background-color);
+}
+
+button:disabled,
+input:disabled,
+textarea:disabled {
+    opacity: 0.5;
+    cursor: auto;
 }
 
 .foot form {

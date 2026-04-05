@@ -18,8 +18,11 @@
 		<h1>Unicode Formatting</h1>
 
 		<div class="header">
-			<select id="variant"></select>
-			<button type="button" id="zero-width-space-btn" title="Insert Zero-Width Space (Ctrl+Alt+Z)">Zero-Width Space</button>
+			<input type="hidden" id="variant">
+			<select id="family"></select>
+			<input type="checkbox" id="bold" title="Bold" aria-label="Bold" class="toggle thin-btn" disabled>
+			<input type="checkbox" id="italic" title="Italic" aria-label="Italic" class="toggle thin-btn" disabled>
+			<button type="button" id="zero-width-space-btn" class="thin-btn" title="Insert Zero-Width Space (Ctrl+Alt+Z)" aria-label="Insert Zero-Width Space">›‹</button>
 			<span style="flex-grow: 1;"></span>
 			<a href="https://github.com/panzi/unicodeformat/#readme">Info</a>
 		</div>

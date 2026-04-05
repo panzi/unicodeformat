@@ -55,7 +55,10 @@ const ASCII = {
 	lowerCase: 97,
 	greekLowerCase: 0x3B1,
 	greekUpperCase: 0x391,
-	digits: 48
+	digits: 48,
+	bold: 'mathBold',
+	italic: 'mathItalic',
+	boldItalic: 'mathBoldItalic',
 };
 
 /** @type {{[key: string]: Definition}} */
@@ -111,7 +114,12 @@ const definitionInits = [
 		digits: 120782,
 		map: {
 			0x2207: 0x1D6C1, // Nabla
-		}
+		},
+		isBold: true,
+		regular: 'ascii',
+		bold: 'mathBold',
+		italic: 'mathItalic',
+		boldItalic: 'mathBoldItalic',
 	},
 	{
 		key: 'mathItalic',
@@ -121,7 +129,12 @@ const definitionInits = [
 		map: {
 			0x2207: 0x1D6fD, // Nabla
 			0x68: 0x210E // h
-		}
+		},
+		isItalic: true,
+		regular: 'ascii',
+		bold: 'mathBold',
+		italic: 'mathItalic',
+		boldItalic: 'mathBoldItalic',
 	},
 	{
 		key: 'mathBoldItalic',
@@ -131,7 +144,13 @@ const definitionInits = [
 		digits: 120782,
 		map: {
 			0x2207: 0x1D735, // Nabla
-		}
+		},
+		isBold: true,
+		isItalic: true,
+		regular: 'ascii',
+		bold: 'mathBold',
+		italic: 'mathItalic',
+		boldItalic: 'mathBoldItalic',
 	},
 	{
 		key: 'mathFrakt',
@@ -144,14 +163,19 @@ const definitionInits = [
 			0x49: 0x2111, // I
 			0x52: 0x211C, // R
 			0x5A: 0x2128, // Z
-		}
+		},
+		regular: 'mathFrakt',
+		bold: 'mathBoldFrakt',
 	},
 	{
 		key: 'mathBoldFrakt',
 		name: 'Mathematical Bold Fraktur',
 		upperCase: 120172,
 		lowerCase: 120198,
-		digits: 120782
+		digits: 120782,
+		isBold: true,
+		regular: 'mathFrakt',
+		bold: 'mathBoldFrakt',
 	},
 	{
 		key: 'mathScript',
@@ -170,20 +194,29 @@ const definitionInits = [
 			0x65: 0x212F, // e
 			0x67: 0x210A, // g
 			0x6F: 0x2134, // o
-		}
+		},
+		regular: 'mathScript',
+		bold: 'mathBoldScript',
 	},
 	{
 		key: 'mathBoldScript',
 		name: 'Mathematical Bold Script',
 		upperCase: 120016,
-		lowerCase: 120042
+		lowerCase: 120042,
+		isBold: true,
+		regular: 'mathScript',
+		bold: 'mathBoldScript',
 	},
 	{
 		key: 'mathSans',
 		name: 'Mathematical Sans-Serif',
 		upperCase: 0x1D5A0,
 		lowerCase: 0x1D5BA,
-		digits: 0x1D7E2
+		digits: 0x1D7E2,
+		regular: 'mathSans',
+		bold: 'mathSansBold',
+		italic: 'mathSansItalic',
+		boldItalic: 'mathSansBoldItalic',
 	},
 	{
 		key: 'mathSansBold',
@@ -193,14 +226,24 @@ const definitionInits = [
 		digits: 0x1D7EC,
 		map: {
 			0x2207: 0x1D76F, // Nabla
-		}
+		},
+		isBold: true,
+		regular: 'mathSans',
+		bold: 'mathSansBold',
+		italic: 'mathSansItalic',
+		boldItalic: 'mathSansBoldItalic',
 	},
 	{
 		key: 'mathSansItalic',
 		name: 'Mathematical Sans-Serif Italic',
 		upperCase: 0x1D608,
 		lowerCase: 0x1D622,
-		digits: 0x1D7E2
+		digits: 0x1D7E2,
+		isItalic: true,
+		regular: 'mathSans',
+		bold: 'mathSansBold',
+		italic: 'mathSansItalic',
+		boldItalic: 'mathSansBoldItalic',
 	},
 	{
 		key: 'mathSansBoldItalic',
@@ -210,7 +253,13 @@ const definitionInits = [
 		digits: 0x1D7EC,
 		map: {
 			0x2207: 0x1D7A9, // Nabla
-		}
+		},
+		isBold: true,
+		isItalic: true,
+		regular: 'mathSans',
+		bold: 'mathSansBold',
+		italic: 'mathSansItalic',
+		boldItalic: 'mathSansBoldItalic',
 	},
 	{
 		key: 'mathMono',
@@ -245,7 +294,7 @@ const definitionInits = [
 	},
 	{
 		key: 'negativeCircled',
-		name: 'NEGATIVE CIRCLED (upper case-only)',
+		name: 'NEGATIVE CIRCLED',
 		upperCase: 0x1F150,
 		map: {
 			48: 0x1F10C,
@@ -262,12 +311,12 @@ const definitionInits = [
 	},
 	{
 		key: 'squared',
-		name: 'SQUARED (upper case-only)',
+		name: 'SQUARED',
 		upperCase: 127280
 	},
 	{
 		key: 'negativeSquared',
-		name: 'NEGATIVE SQUARED (upper case-only)',
+		name: 'NEGATIVE SQUARED',
 		upperCase: 127344
 	},
 	{
@@ -293,6 +342,12 @@ const definitionInits = [
 /** @type {{[codepoint: number]: number}} */
 const TO_ASCII = {};
 
+/** @type {FontGroup[]} */
+const groups = [];
+
+/** @type {{[key: string]: FontGroup}} */
+const groupMap = {};
+
 // Process in reverse order so redundant usage of code points for numbers will
 // be overwritten with the correct ones, which come before in this list.
 for (let i = definitionInits.length - 1; i >= 0; -- i) {
@@ -304,6 +359,31 @@ for (let i = definitionInits.length - 1; i >= 0; -- i) {
 
 	/** @type {Definition} */
 	const def = { ...init, map };
+
+	const groupKey = init.regular ?? init.key;
+	/** @type {FontGroup} */
+	let group;
+
+	if (Object.hasOwn(groupMap, groupKey)) {
+		group = groupMap[groupKey];
+	} else {
+		group = groupMap[groupKey] = {
+			name: init.name,
+			key: groupKey,
+		};
+		groups.push(group);
+	}
+
+	if (init.isBold && init.isItalic) {
+		group.boldItalic = def;
+	} else if (init.isBold) {
+		group.bold = def;
+	} else if (init.isItalic) {
+		group.italic = def;
+	} else {
+		group.name = def.name;
+		group.regular = def;
+	}
 
 	definitionMap[def.key] = def;
 	definitions.push(def);
@@ -385,6 +465,7 @@ for (let i = definitionInits.length - 1; i >= 0; -- i) {
 	}
 }
 definitions.reverse();
+groups.reverse();
 
 function init() {
 	const variantEl = document.getElementById('variant');
@@ -393,9 +474,12 @@ function init() {
 	const intentBtn = document.getElementById('intent-btn');
 	const intentUrlInput = document.getElementById('intent-url');
 	const zwSpcBtn = document.getElementById('zero-width-space-btn');
+	const familyEl = document.getElementById('family');
+	const boldEl = document.getElementById('bold');
+	const italicEl = document.getElementById('italic');
 
-	if (!(variantEl instanceof HTMLSelectElement)) {
-		console.error('variantEl is not a HTMLSelectElement!', variantEl);
+	if (!(variantEl instanceof HTMLInputElement)) {
+		console.error('variantEl is not a HTMLInputElement!', variantEl);
 		return;
 	}
 
@@ -424,6 +508,21 @@ function init() {
 		return;
 	}
 
+	if (!(familyEl instanceof HTMLSelectElement)) {
+		console.error('familyEl is not a HTMLSelectElement!', familyEl);
+		return;
+	}
+
+	if (!(boldEl instanceof HTMLInputElement)) {
+		console.error('boldEl is not a HTMLInputElement!', boldEl);
+		return;
+	}
+
+	if (!(italicEl instanceof HTMLInputElement)) {
+		console.error('italicEl is not a HTMLInputElement!', italicEl);
+		return;
+	}
+
 	const growers = document.querySelectorAll(".grow-wrap");
 
 	growers.forEach((grower) => {
@@ -435,58 +534,85 @@ function init() {
 		}
 	});
 
-	initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn);
+	initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn, familyEl, boldEl, italicEl);
 }
 
 /**
- * @param {HTMLSelectElement} variantEl 
+ * @param {HTMLInputElement} variantEl
  * @param {HTMLTextAreaElement} textEl
  * @param {HTMLButtonElement} copyBtn
  * @param {HTMLButtonElement} intentBtn
  * @param {HTMLInputElement} intentUrlInput
  * @param {HTMLButtonElement} zwSpcBtn
+ * @param {HTMLSelectElement} familyEl
+ * @param {HTMLInputElement} boldEl
+ * @param {HTMLInputElement} italicEl
  */
-function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn) {
-	for (let i = 0; i < definitions.length; ++ i) {
-		const def = definitions[i];
-		const optionEl = document.createElement('option');
-		optionEl.value = def.key;
+function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn, familyEl, boldEl, italicEl) {
+	for (let i = 0; i < groups.length; ++ i) {
+		const group = groups[i];
 		const hotkey = i > 9 ? `Ctrl+Alt+${i - 10}` : `Ctrl+${i}`;
-		optionEl.title = `${def.name} (variant: ${def.key}, ${hotkey})`;
-		optionEl.appendChild(document.createTextNode(convertStr(def.name, def)));
-		variantEl.appendChild(optionEl);
+		const optionEl = document.createElement('option');
+		optionEl.value = group.key;
+		optionEl.title = `${group.name} (family: ${group.key}, ${hotkey})`;
+		const def = group.regular ?? group.bold ?? group.italic ?? group.boldItalic;
+		optionEl.appendChild(document.createTextNode(def ? convertStr(group.name, def) : group.name));
+		familyEl.appendChild(optionEl);
 	}
 
-	variantEl.title = definitionMap[variantEl.value].name;
-
-	function updateVariant() {
+	function applyVariant() {
+		const def = definitionMap[variantEl.value];
 		const selStart = textEl.selectionStart ?? 0;
 		const selEnd = textEl.selectionEnd ?? 0;
-		const definition = definitionMap[variantEl.value];
 		const str = textEl.value;
-		/*
-		if (selStart === selEnd) {
-			const converted = convertStr(str, definition);
-			textEl.selectionStart = 0;
-			textEl.selectionEnd = str.length;
-			textEl.focus();
-			document.execCommand('insertText', false, converted);
-			textEl.selectionStart = textEl.selectionEnd = converted.length;
-		}
-		else {
-		*/
-			const selected = str.slice(selStart, selEnd);
-			const converted = convertStr(selected, definition);
-			textEl.value = str.slice(0, selStart) + converted + str.slice(selEnd);
-			//textEl.focus();
-			textEl.selectionStart = selStart;
-			textEl.selectionEnd = selStart + converted.length;
-		//}
-		variantEl.title = definition.name;
+
+		const selected = str.slice(selStart, selEnd);
+		const converted = convertStr(selected, def);
+		textEl.value = str.slice(0, selStart) + converted + str.slice(selEnd);
+		textEl.selectionStart = selStart;
+		textEl.selectionEnd = selStart + converted.length;
+
 		textEl.focus();
 	}
 
-	variantEl.addEventListener('change', updateVariant, false);
+	/**
+	 * @param {Definition} def 
+	 */
+	function applyBoldItalicState(def) {
+		boldEl.disabled = !((def.bold || def.boldItalic) && (def.regular || def.italic));
+		italicEl.disabled = !((def.italic || def.boldItalic) && (def.regular || def.bold));
+		boldEl.checked = !!def.isBold;
+		italicEl.checked = !!def.isItalic;
+	}
+
+	function applyFamilyBoldItalic() {
+		const group = groupMap[familyEl.value];
+
+		/** @type {Definition=} */
+		let def;
+
+		if (boldEl.checked && italicEl.checked) {
+			def = group.boldItalic ?? group.bold ?? group.italic;
+		} else if (boldEl.checked) {
+			def = group.bold ?? group.boldItalic;
+		} else if (italicEl.checked) {
+			def = group.italic ?? group.boldItalic;
+		} else {
+			def = group.regular ?? group.italic ?? group.bold ?? group.boldItalic;
+		}
+
+		def ??= definitionMap[familyEl.value];
+
+		applyBoldItalicState(def);
+
+		variantEl.value = def.key;
+		familyEl.title = group.name;
+		applyVariant();
+	}
+
+	familyEl.addEventListener('change', applyFamilyBoldItalic, false);
+	boldEl.addEventListener('change', applyFamilyBoldItalic, false);
+	italicEl.addEventListener('change', applyFamilyBoldItalic, false);
 
 	/** @param {string} text */
 	function insertText(text) {
@@ -565,12 +691,14 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 	}, true);
 
 	window.addEventListener('keydown', function (event) {
-		const { ctrlKey, key } = event;
+		const { ctrlKey, altKey, metaKey, altGrKey, key } = event;
 
-		if (ctrlKey) {
+		if (ctrlKey && !altKey && !metaKey && !altGrKey) {
 			switch (key) {
 				case 'ArrowDown':
 				case 'ArrowUp':
+				case 'i':
+				case 'b':
 					event.preventDefault();
 					event.stopPropagation();
 					break;
@@ -579,62 +707,92 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 	}, true);
 
 	window.addEventListener('keyup', function (event) {
-		const { ctrlKey, altKey, key } = event;
+		const { ctrlKey, altKey, metaKey, altGrKey, key } = event;
+
+		if (metaKey || altGrKey) {
+			return;
+		}
 
 		if (ctrlKey) {
-			switch (key) {
-				case 'ArrowDown':
-				{
-					event.preventDefault();
-					event.stopPropagation();
+			if (!altKey) {
+				switch (key) {
+					case 'ArrowDown':
+					{
+						event.preventDefault();
+						event.stopPropagation();
 
-					let index = 0;
-					const current = variantEl.value;
-					for (; index < definitions.length; ++ index) {
-						if (definitions[index].key === current) {
-							break;
+						let index = 0;
+						const current = familyEl.value;
+						for (; index < groups.length; ++ index) {
+							if (groups[index].key === current) {
+								break;
+							}
 						}
-					}
 
-					if (index >= definitions.length) {
-						console.error(index, definitions.length)
-						index = 0;
-					} else {
-						index = (index + 1) % definitions.length;
-					}
-
-					variantEl.value = definitions[index].key;
-					updateVariant();
-					return;
-				}
-
-				case 'ArrowUp':
-				{
-					event.preventDefault();
-					event.stopPropagation();
-
-					let index = 0;
-					const current = variantEl.value;
-					for (; index < definitions.length; ++ index) {
-						if (definitions[index].key === current) {
-							break;
+						if (index >= groups.length) {
+							console.error(index, groups.length)
+							index = 0;
+						} else {
+							index = (index + 1) % groups.length;
 						}
+
+						const group = groups[index];
+						familyEl.value = group.key;
+						applyFamilyBoldItalic();
+						return;
 					}
 
-					if (index >= definitions.length) {
-						console.error(index, definitions.length)
-						index = 0;
-					} else {
-						index = index === 0 ? definitions.length - 1 : index - 1;
+					case 'ArrowUp':
+					{
+						event.preventDefault();
+						event.stopPropagation();
+
+						let index = 0;
+						const current = familyEl.value;
+						for (; index < groups.length; ++ index) {
+							if (groups[index].key === current) {
+								break;
+							}
+						}
+
+						if (index >= groups.length) {
+							console.error(index, groups.length)
+							index = 0;
+						} else {
+							index = index === 0 ? groups.length - 1 : index - 1;
+						}
+
+						const group = groups[index];
+						familyEl.value = group.key;
+						applyFamilyBoldItalic();
+						return;
 					}
 
-					variantEl.value = definitions[index].key;
-					updateVariant();
-					return;
+					case 'i':
+					{
+						event.preventDefault();
+						event.stopPropagation();
+
+						if (!italicEl.disabled) {
+							italicEl.checked = !italicEl.checked;
+							applyFamilyBoldItalic();
+						}
+						return;
+					}
+
+					case 'b':
+					{
+						event.preventDefault();
+						event.stopPropagation();
+
+						if (!boldEl.disabled) {
+							boldEl.checked = !boldEl.checked;
+							applyFamilyBoldItalic();
+						}
+						return;
+					}
 				}
-			}
-
-			if (altKey) {
+			} else {
 				switch (key) {
 					case 'c':
 						event.preventDefault();
@@ -661,10 +819,10 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 						index += 10;
 					}
 
-					if (definitions.length > index) {
-						const def = definitions[index];
-						variantEl.value = def.key;
-						updateVariant();
+					if (groups.length > index) {
+						const group = groups[index];
+						familyEl.value = group.key;
+						applyFamilyBoldItalic();
 					}
 
 					event.preventDefault();
@@ -732,7 +890,9 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 			if (codePoint !== undefined && codePoint in definitionMap) {
 				const def = definitionMap[codePoint];
 				variantEl.value = def.key;
-				variantEl.title = def.name;
+
+				applyBoldItalicState(def);
+				familyEl.value = def.regular ?? def.key;
 			}
 		} else {
 			oldSelectionStart = 0;
@@ -744,15 +904,45 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 
 	{
 		const url = new URL(location.href);
+
 		const variant = url.searchParams.get('variant');
-		const def = variant && variant in definitionMap && definitionMap[variant];
-		if (def) {
-			variantEl.value = variant;
+		const family = url.searchParams.get('family');
+		const bold = url.searchParams.get('bold')?.trim().toLowerCase() === 'true';
+		const italic = url.searchParams.get('italic')?.trim().toLowerCase() === 'true';
+
+		/** @type {Definition=} */
+		let paramDef;
+		
+		if (family && Object.hasOwn(groupMap, family)) {
+			const group = groupMap[family];
+
+			if (bold && italic) {
+				paramDef = group.boldItalic ?? group.bold ?? group.italic ?? group.regular;
+			} else if (bold) {
+				paramDef = group.bold ?? group.boldItalic ?? group.regular ?? group.italic;
+			} else if (italic) {
+				paramDef = group.italic ?? group.boldItalic ?? group.regular ?? group.bold;
+			}
+
+			paramDef ??= definitionMap[group.key];
 		}
+		
+		if (!paramDef && variant && Object.hasOwn(definitionMap, variant)) {
+			paramDef = definitionMap[variant];
+		}
+
+		{
+			const def = paramDef || definitionMap[variantEl.value];
+			applyBoldItalicState(def);
+			variantEl.value = def.key;
+			familyEl.value = def.regular ?? def.key;
+			familyEl.title = groupMap[familyEl.value].name;
+		}
+
 		const text = url.searchParams.get('text');
 		if (text) {
-			if (def) {
-				textEl.value = convertStr(text, def);
+			if (paramDef) {
+				textEl.value = convertStr(text, paramDef);
 			} else {
 				textEl.value = text;
 			}
