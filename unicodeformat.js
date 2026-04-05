@@ -53,6 +53,8 @@ const ASCII = {
 	basicSet: 33,
 	upperCase: 65,
 	lowerCase: 97,
+	greekLowerCase: 0x3B1,
+	greekUpperCase: 0x391,
 	digits: 48
 };
 
@@ -61,6 +63,8 @@ const definitionMap = {};
 
 /** @type {Definition[]} */
 const definitions = [];
+
+// TODO: greek letters
 
 /** @type {DefinitionInit[]} */
 const definitionInits = [
@@ -104,23 +108,44 @@ const definitionInits = [
 		name: 'Mathematical Bold',
 		upperCase: 119808,
 		lowerCase: 119834,
-		digits: 120782
+		digits: 120782,
+		map: {
+			0x2207: 0x1D6C1, // Nabla
+		}
+	},
+	{
+		key: 'mathItalic',
+		name: 'Mathematical Italic',
+		upperCase: 0x1D434,
+		lowerCase: 0x1D44E,
+		map: {
+			0x2207: 0x1D6fD, // Nabla
+			0x68: 0x210E // h
+		}
 	},
 	{
 		key: 'mathBoldItalic',
 		name: 'Mathematical Bold Italic',
 		upperCase: 119912,
 		lowerCase: 119938,
-		digits: 120782
+		digits: 120782,
+		map: {
+			0x2207: 0x1D735, // Nabla
+		}
 	},
-	/* incomplete!
 	{
 		key: 'mathFrakt',
 		name: 'Mathematical Fraktur',
 		upperCase: 120068,
-		lowerCase: 120094
+		lowerCase: 120094,
+		map: {
+			0x43: 0x212D, // C
+			0x48: 0x210C, // H
+			0x49: 0x2111, // I
+			0x52: 0x211C, // R
+			0x5A: 0x2128, // Z
+		}
 	},
-	*/
 	{
 		key: 'mathBoldFrakt',
 		name: 'Mathematical Bold Fraktur',
@@ -154,7 +179,10 @@ const definitionInits = [
 		name: 'Mathematical Sans-Serif Bold',
 		upperCase: 0x1D5D4,
 		lowerCase: 0x1D5EE,
-		digits: 0x1D7EC
+		digits: 0x1D7EC,
+		map: {
+			0x2207: 0x1D76F, // Nabla
+		}
 	},
 	{
 		key: 'mathSansItalic',
@@ -168,7 +196,10 @@ const definitionInits = [
 		name: 'Mathematical Sans-Serif Bold Italic',
 		upperCase: 0x1D63C,
 		lowerCase: 0x1D656,
-		digits: 0x1D7EC
+		digits: 0x1D7EC,
+		map: {
+			0x2207: 0x1D7A9, // Nabla
+		}
 	},
 	{
 		key: 'mathMono',
@@ -255,17 +286,10 @@ const TO_ASCII = {};
 // be overwritten with the correct ones, which come before in this list.
 for (let i = definitionInits.length - 1; i >= 0; -- i) {
 	const init = definitionInits[i];
-	const { lowerCase, upperCase, digits, basicSet, space } = init;
-	let { map } = init;
+	const { lowerCase, upperCase, greekLowerCase, greekUpperCase, digits, basicSet, space } = init;
 
-	if (map) {
-		for (let asciiStr in map) {
-			const ascii = +asciiStr;
-			TO_ASCII[map[ascii]] = ascii;
-		}
-	} else {
-		map = {};
-	}
+	/** @type {{[codepoint: number]: number}} */
+	const map = {};
 
 	/** @type {Definition} */
 	const def = { ...init, map };
@@ -291,6 +315,24 @@ for (let i = definitionInits.length - 1; i >= 0; -- i) {
 		}
 	}
 
+	if (greekLowerCase !== undefined) {
+		for (let offset = 0; offset < 25; ++ offset) {
+			const asciiLower = ASCII.greekLowerCase + offset;
+			const lower = greekLowerCase + offset;
+			TO_ASCII[lower] = asciiLower;
+			def.map[asciiLower] = lower;
+		}
+	}
+
+	if (greekUpperCase !== undefined) {
+		for (let offset = 0; offset < 25; ++ offset) {
+			const asciiUpper = ASCII.greekUpperCase + offset;
+			const upper = greekUpperCase + offset;
+			TO_ASCII[upper] = asciiUpper;
+			def.map[asciiUpper] = upper;
+		}
+	}
+
 	if (digits !== undefined) {
 		for (let offset = 0; offset < 10; ++ offset) {
 			const ascii = ASCII.digits + offset;
@@ -306,6 +348,18 @@ for (let i = definitionInits.length - 1; i >= 0; -- i) {
 			const conv = basicSet + offset;
 			TO_ASCII[conv] = ascii;
 			def.map[ascii] = conv;
+		}
+	}
+
+	const { map: initMap } = init;
+
+	// map overwrites ranges
+	if (initMap) {
+		for (let asciiStr in initMap) {
+			const ascii = +asciiStr;
+			const value = initMap[ascii];
+			TO_ASCII[value] = ascii;
+			map[asciiStr] = value;
 		}
 	}
 

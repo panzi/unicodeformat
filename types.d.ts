@@ -5,6 +5,8 @@ interface Definition {
     basicSet?: number;
     lowerCase?: number;
     upperCase?: number;
+    greekLowerCase?: number;
+    greekUpperCase?: number;
     digits?: number;
     map: { [codepoint: number]: number }
 }
