@@ -153,14 +153,25 @@ const definitionInits = [
 		lowerCase: 120198,
 		digits: 120782
 	},
-	/* incomplete!
 	{
 		key: 'mathScript',
 		name: 'Mathematical Script',
 		upperCase: 119964,
-		lowerCase: 119990
+		lowerCase: 119990,
+		map: {
+			0x42: 0x212C, // B
+			0x45: 0x2130, // E
+			0x46: 0x2131, // F
+			0x48: 0x210B, // H
+			0x49: 0x2110, // I
+			0x4C: 0x2112, // L
+			0x4D: 0x2133, // M
+			0x52: 0x211B, // R
+			0x65: 0x212F, // e
+			0x67: 0x210A, // g
+			0x6F: 0x2134, // o
+		}
 	},
-	*/
 	{
 		key: 'mathBoldScript',
 		name: 'Mathematical Bold Script',
