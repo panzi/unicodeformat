@@ -72,17 +72,17 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | :------ | :-------------- |
 | Normal | `ascii` |
 | 𝕄𝕒𝕥𝕙𝕖𝕞𝕒𝕥𝕚𝕔𝕒𝕝 𝔻𝕠𝕦𝕓𝕝𝕖-𝕊𝕥𝕣𝕦𝕔𝕜[^1] | `mathDoubleStruck` |
-| 𝑀𝑎𝑡ℎ𝑒𝑚𝑎𝑡𝑖𝑐𝑎𝑙 𝐼𝑡𝑎𝑙𝑖𝑐[^1][^7] | `mathItalic` |
-| 𝐌𝐚𝐭𝐡𝐞𝐦𝐚𝐭𝐢𝐜𝐚𝐥 𝐁𝐨𝐥𝐝[^1] | `mathBold` |
-| 𝑴𝒂𝒕𝒉𝒆𝒎𝒂𝒕𝒊𝒄𝒂𝒍 𝑩𝒐𝒍𝒅 𝑰𝒕𝒂𝒍𝒊𝒄[^2] | `mathBoldItalic` |
+| 𝑀𝑎𝑡ℎ𝑒𝑚𝑎𝑡𝑖𝑐𝑎𝑙 𝐼𝑡𝑎𝑙𝑖𝑐[^1][^7][^10] | `mathItalic` |
+| 𝐌𝐚𝐭𝐡𝐞𝐦𝐚𝐭𝐢𝐜𝐚𝐥 𝐁𝐨𝐥𝐝[^1][^10] | `mathBold` |
+| 𝑴𝒂𝒕𝒉𝒆𝒎𝒂𝒕𝒊𝒄𝒂𝒍 𝑩𝒐𝒍𝒅 𝑰𝒕𝒂𝒍𝒊𝒄[^2][^10] | `mathBoldItalic` |
 | 𝔐𝔞𝔱𝔥𝔢𝔪𝔞𝔱𝔦𝔠𝔞𝔩 𝔉𝔯𝔞𝔨𝔱𝔲𝔯[^8] | `mathFrakt` |
 | 𝕸𝖆𝖙𝖍𝖊𝖒𝖆𝖙𝖎𝖈𝖆𝖑 𝕭𝖔𝖑𝖉 𝕱𝖗𝖆𝖐𝖙𝖚𝖗[^2] | `mathBoldFrakt` |
 | ℳ𝒶𝓉𝒽ℯ𝓂𝒶𝓉𝒾𝒸𝒶𝓁 𝒮𝒸𝓇𝒾𝓅𝓉[^9] | `mathScript` |
 | 𝓜𝓪𝓽𝓱𝓮𝓶𝓪𝓽𝓲𝓬𝓪𝓵 𝓑𝓸𝓵𝓭 𝓢𝓬𝓻𝓲𝓹𝓽 | `mathBoldScript` |
 | 𝖬𝖺𝗍𝗁𝖾𝗆𝖺𝗍𝗂𝖼𝖺𝗅 𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿[^1] | `mathSans` |
-| 𝗠𝗮𝘁𝗵𝗲𝗺𝗮𝘁𝗶𝗰𝗮𝗹 𝗦𝗮𝗻𝘀-𝗦𝗲𝗿𝗶𝗳 𝗕𝗼𝗹𝗱[^1] | `mathSansBold` |
+| 𝗠𝗮𝘁𝗵𝗲𝗺𝗮𝘁𝗶𝗰𝗮𝗹 𝗦𝗮𝗻𝘀-𝗦𝗲𝗿𝗶𝗳 𝗕𝗼𝗹𝗱[^1][^10] | `mathSansBold` |
 | 𝘔𝘢𝘵𝘩𝘦𝘮𝘢𝘵𝘪𝘤𝘢𝘭 𝘚𝘢𝘯𝘴-𝘚𝘦𝘳𝘪𝘧 𝘐𝘵𝘢𝘭𝘪𝘤[^3] | `mathSansItalic` |
-| 𝙈𝙖𝙩𝙝𝙚𝙢𝙖𝙩𝙞𝙘𝙖𝙡 𝙎𝙖𝙣𝙨-𝙎𝙚𝙧𝙞𝙛 𝘽𝙤𝙡𝙙 𝙄𝙩𝙖𝙡𝙞𝙘[^4] | `mathSansBoldItalic` |
+| 𝙈𝙖𝙩𝙝𝙚𝙢𝙖𝙩𝙞𝙘𝙖𝙡 𝙎𝙖𝙣𝙨-𝙎𝙚𝙧𝙞𝙛 𝘽𝙤𝙡𝙙 𝙄𝙩𝙖𝙡𝙞𝙘[^4][^10] | `mathSansBoldItalic` |
 | 𝙼𝚊𝚝𝚑𝚎𝚖𝚊𝚝𝚒𝚌𝚊𝚕 𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎[^1] | `mathMono` |
 | Ｆｕｌｌｗｉｄｔｈ[^1] | `fullwidth` |
 | Ⓒⓘⓡⓒⓛⓔⓓ[^1] | `circled` |
@@ -101,6 +101,7 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
       because it is the re-purposed Plank constant (ℎ).
 [^8]: Uses "Black-Letter" to for the missing letters (C, H, I, R, Z).
 [^9]: Uses "Script" to for the missing letters (B, E, F, H, I, L, M, R, e, g, o).
+[^10]: Supports Greek letters.
 
 ### Examples
 
