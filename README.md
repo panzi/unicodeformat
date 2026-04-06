@@ -30,7 +30,7 @@ Hotkeys
 | `Ctrl`+`ArrowUp` | Select previous family. |
 | `Ctrl`+`Alt`+`C` | Copy whole text to clipboard. |
 | `Ctrl`+`Alt`+`Z` | Insert zero-width space. This is useful when you want to make a hashtag out of a plural word, but that hashtag shouldn't contain the s. [#example](https://example.com/)s |
-| `Ctrl`+`Enter` | Post on Mastodon. |
+| `Ctrl`+`Enter` | Post on Mastodon. Simply navigates to `<Mastodon Instance URL>/?text=<Text>` |
 
 Parameters
 ----------
@@ -39,11 +39,11 @@ You can pre-fill the text and apply a format to it with these parameters:
 
 | Parameter | Description |
 | :-------- | :---------- |
-| `text`    | The text to load. |
+| `text`    | The text to edit. |
 | `family`  | See [below](#family-parameter) for possible values. |
-| `bold`    | `true` or `false`. |
-| `italic`  | `true` or `false`. |
-| `variant` | `family`+`bold`+`italic` in one. See [below](#variant-parameter) for possible values. You can also use this to clear any formatting by passing `ascii`. |
+| `bold`    | `true` or `false`. `family` needs to be set to have any effect. |
+| `italic`  | `true` or `false`. `family` needs to be set to have any effect. |
+| `variant` | `family`+`bold`+`italic` in one. See [below](#variant-parameter) for possible values. You can also use this to clear any formatting by passing `ascii`. If both `family` and `variant` are set to valid values then `family` takes precedence. |
 
 ### Family Parameter
 
