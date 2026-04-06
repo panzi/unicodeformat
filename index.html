@@ -17,15 +17,15 @@
 	<body>
 		<h1>Unicode Formatting</h1>
 
-		<div class="header">
+		<header class="header">
 			<input type="hidden" id="variant" value="ascii">
-			<select id="family"></select>
+			<select id="family" aria-label="Font Family"></select>
 			<input type="checkbox" id="bold" title="Bold" aria-label="Bold" class="toggle thin-btn" disabled>
 			<input type="checkbox" id="italic" title="Italic" aria-label="Italic" class="toggle thin-btn" disabled>
 			<button type="button" id="zero-width-space-btn" class="thin-btn" title="Insert Zero-Width Space (Ctrl+Alt+Z)" aria-label="Insert Zero-Width Space">›‹</button>
-			<span style="flex-grow: 1;"></span>
-			<a href="https://github.com/panzi/unicodeformat/#readme">Help</a>
-		</div>
+			<span style="flex-grow: 1;" aria-hidden="true"></span>
+			<a rel="help noreferrer noopener" href="https://github.com/panzi/unicodeformat/#readme">Help</a>
+		</header>
 
 		<div class="grow-wrap">
 			<textarea id="text" placeholder="Type your message here…" autocomplete="off" autofocus></textarea>
