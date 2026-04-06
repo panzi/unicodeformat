@@ -7,6 +7,7 @@ interface Definition {
     upperCase?: number;
     greekLowerCase?: number;
     greekUpperCase?: number;
+    greekAdditional?: number;
     digits?: number;
     map: { [codepoint: number]: number },
     isBold?: boolean,
