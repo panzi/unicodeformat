@@ -105,6 +105,8 @@ const definitionInits = [
 		upperCase: 119808,
 		lowerCase: 119834,
 		digits: 120782,
+		greekUpperCase: 0x1D6A8,
+		greekLowerCase: 0x1D6C2,
 		map: {
 			0x2207: 0x1D6C1, // Nabla
 		},
@@ -119,6 +121,8 @@ const definitionInits = [
 		name: 'Mathematical Italic',
 		upperCase: 0x1D434,
 		lowerCase: 0x1D44E,
+		greekUpperCase: 0x1D6E2,
+		greekLowerCase: 0x1D6FC,
 		map: {
 			0x2207: 0x1D6fD, // Nabla
 			0x68: 0x210E // h
@@ -135,6 +139,8 @@ const definitionInits = [
 		upperCase: 119912,
 		lowerCase: 119938,
 		digits: 120782,
+		greekUpperCase: 0x1D71C,
+		greekLowerCase: 0x1D736,
 		map: {
 			0x2207: 0x1D735, // Nabla
 		},
@@ -217,6 +223,8 @@ const definitionInits = [
 		upperCase: 0x1D5D4,
 		lowerCase: 0x1D5EE,
 		digits: 0x1D7EC,
+		greekUpperCase: 0x1D756,
+		greekLowerCase: 0x1D770,
 		map: {
 			0x2207: 0x1D76F, // Nabla
 		},
@@ -244,6 +252,8 @@ const definitionInits = [
 		upperCase: 0x1D63C,
 		lowerCase: 0x1D656,
 		digits: 0x1D7EC,
+		greekUpperCase: 0x1D790,
+		greekLowerCase: 0x1D7AA,
 		map: {
 			0x2207: 0x1D7A9, // Nabla
 		},
