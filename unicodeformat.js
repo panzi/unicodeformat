@@ -28,7 +28,7 @@ function convertStr(str, definition) {
 
 		i += codePoint >= 0x010000 ? 2 : 1;
 	}
-	return String.fromCodePoint(...codePoints);
+	return String.fromCodePoint(...codePoints).normalize('NFC');
 }
 
 /** @type {{[codepoint: number]: boolean}} */
@@ -647,7 +647,10 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 		if (Object.hasOwn(map, character)) {
 			event.preventDefault();
 			event.stopPropagation();
-			const converted = String.fromCodePoint(map[character]) + decomp.slice(1);
+			let converted = String.fromCodePoint(map[character]);
+			if (decomp.length > 1) {
+				converted = (converted + decomp.slice(1)).normalize('NFC');
+			}
 			insertText(converted);
 		}
 	}, true);
