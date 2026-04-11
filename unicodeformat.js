@@ -613,8 +613,7 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 		const selected = str.slice(selStart, selEnd);
 		const converted = convertStr(selected, def);
 		textEl.value = str.slice(0, selStart) + converted + str.slice(selEnd);
-		textEl.selectionStart = selStart;
-		textEl.selectionEnd = selStart + converted.length;
+		textEl.setSelectionRange(selStart, selStart + converted.length);
 
 		textEl.focus();
 	}
@@ -664,7 +663,8 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 		const selEnd = textEl.selectionEnd ?? 0;
 		const str = textEl.value;
 		textEl.value = str.slice(0, selStart) + text + str.slice(selEnd);
-		textEl.selectionStart = textEl.selectionEnd = selStart + text.length;
+		const newPos = selStart + text.length;
+		textEl.setSelectionRange(newPos, newPos);
 	}
 
 	zwSpcBtn.addEventListener('click', function (event) {
@@ -866,7 +866,7 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 
 			if (key.length === 1) {
 				const codepoint = key.codePointAt(0) ?? 0;
-				if (codepoint >= 0x30 && codepoint <= 0x39) {
+				if (codepoint >= 0x30 && codepoint <= 0x39) { // '0' ... '9'
 					let index = codepoint - 0x30;
 
 					if (altKey) {
@@ -881,7 +881,50 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 
 					event.preventDefault();
 					event.stopPropagation();
+					return;
 				}
+			}
+		}
+	}, true);
+
+	// HACK: On Android things like "ä" don't produce a keyup event with key == "ä".
+	//       It produces a keyup event with key == "Process" (Firefox) or
+	//       key == "Unidentifed" (Chrome) and then an input event.
+	let nonAsciiCharTimeStamp = -Infinity;
+	textEl.addEventListener('keydown', function (event) {
+		const { ctrlKey, altKey, metaKey, key } = event;
+
+		if (ctrlKey || altKey || metaKey) {
+			return;
+		}
+
+		if (key === 'Process' || key === 'Unidentified') {
+			nonAsciiCharTimeStamp = event.timeStamp;
+			return;
+		}
+
+		nonAsciiCharTimeStamp = -Infinity;
+	}, true);
+
+	textEl.addEventListener('input', function (event) {
+		// HACK: Support typing umlauts etc. in Firefox on Android.
+		//       Chrome on Android produces a string consisting of the correct,
+		//       but rendering is broken.
+		if (event.timeStamp - nonAsciiCharTimeStamp < 25 && event.inputType === 'insertText') {
+			nonAsciiCharTimeStamp = -Infinity;
+
+			const selStart = textEl.selectionStart;
+			const selEnd = textEl.selectionEnd;
+
+			if (selStart !== null && selStart === selEnd) {
+				const def = definitionMap[variantEl.value];
+				const str = textEl.value;
+				const char = event.data ?? '';
+				const charStart = selStart - char.length;
+				const converted = convertStr(char, def);
+				textEl.value = str.slice(0, charStart) + converted + str.slice(selStart);
+				const newPos = charStart + converted.length;
+				textEl.setSelectionRange(newPos, newPos);
 			}
 		}
 	}, true);
