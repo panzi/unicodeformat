@@ -60,11 +60,12 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 𝖬𝖺𝗍𝗁𝖾𝗆𝖺𝗍𝗂𝖼𝖺𝗅 𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿 | `mathSans` | ✅ | ✅ | ✅ | `Ctrl`+`4` |
 | 𝙼𝚊𝚝𝚑𝚎𝚖𝚊𝚝𝚒𝚌𝚊𝚕 𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎 | `mathMono` | | | | `Ctrl`+`5` |
 | Ｆｕｌｌｗｉｄｔｈ | `fullwidth` | | | | `Ctrl`+`6` |
-| Ⓒⓘⓡⓒⓛⓔⓓ | `circled` | | | | `Ctrl`+`7` |
-| 🅝🅔🅖🅐🅣🅘🅥🅔 🅒🅘🅡🅒🅛🅔🅓 | `negativeCircled` | | | | `Ctrl`+`8` |
-| 🅂🅀🅄🄰🅁🄴🄳 | `squared` | | | | `Ctrl`+`9` |
-| 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳 | `negativeSquared` | | | | `Ctrl`+`Alt`+`0` |
-| 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟ | `parenthesized` | | | | `Ctrl`+`Alt`+`1` |
+| Sᴍᴀʟʟ Cᴀᴘɪᴛᴀʟ Lᴇᴛᴛᴇʀꜱ | | | | `smallcaps` | `Ctrl`+`7` |
+| Ⓒⓘⓡⓒⓛⓔⓓ | `circled` | | | | `Ctrl`+`8` |
+| 🅝🅔🅖🅐🅣🅘🅥🅔 🅒🅘🅡🅒🅛🅔🅓 | `negativeCircled` | | | | `Ctrl`+`9` |
+| 🅂🅀🅄🄰🅁🄴🄳 | `squared` | | | | `Ctrl`+`Alt`+`0` |
+| 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳 | `negativeSquared` | | | | `Ctrl`+`Alt`+`1` |
+| 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟ | `parenthesized` | | | | `Ctrl`+`Alt`+`2` |
 
 ### Variant Parameter
 
@@ -85,6 +86,7 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 𝙈𝙖𝙩𝙝𝙚𝙢𝙖𝙩𝙞𝙘𝙖𝙡 𝙎𝙖𝙣𝙨-𝙎𝙚𝙧𝙞𝙛 𝘽𝙤𝙡𝙙 𝙄𝙩𝙖𝙡𝙞𝙘[^4][^10] | `mathSansBoldItalic` |
 | 𝙼𝚊𝚝𝚑𝚎𝚖𝚊𝚝𝚒𝚌𝚊𝚕 𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎[^1] | `mathMono` |
 | Ｆｕｌｌｗｉｄｔｈ[^1] | `fullwidth` |
+| Sᴍᴀʟʟ Cᴀᴘɪᴛᴀʟ Lᴇᴛᴛᴇʀꜱ[^11] | `smallcaps` |
 | Ⓒⓘⓡⓒⓛⓔⓓ[^1] | `circled` |
 | 🅝🅔🅖🅐🅣🅘🅥🅔 🅒🅘🅡🅒🅛🅔🅓[^1][^5] | `negativeCircled` |
 | 🅂🅀🅄🄰🅁🄴🄳[^5] | `squared` |
@@ -102,6 +104,9 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 [^8]: Uses "Black-Letter" to for the missing letters (C, H, I, R, Z).
 [^9]: Uses "Script" to for the missing letters (B, E, F, H, I, L, M, R, e, g, o).
 [^10]: Supports Greek letters.
+[^11]: Only for lowercase letters not including x, though a small capital x
+       would look like a normal lower case x anyway. Includes a handful of
+       greek letters.
 
 ### Examples
 
