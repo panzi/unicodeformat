@@ -302,6 +302,38 @@ const definitionInits = [
 		space: 12288
 	},
 	{
+		key: 'smallcaps',
+		name: 'Small Capital Letters',
+		map: {
+			// no support for SMALL CAPITAL X in Unicode!
+			0x62: 0x0299,
+			0x67: 0x0262,
+			0x68: 0x029C,
+			0x69: 0x026A,
+			0x6C: 0x029F,
+			0x6E: 0x0274,
+			0x72: 0x0280,
+			0x79: 0x028F,
+			0x61: 0x1D00,
+			0x63: 0x1D04,
+			0x64: 0x1D05,
+			0x65: 0x1D07,
+			0x6A: 0x1D0A,
+			0x6B: 0x1D0B,
+			0x6D: 0x1D0D,
+			0x6F: 0x1D0F,
+			0x70: 0x1D18,
+			0x74: 0x1D1B,
+			0x75: 0x1D1C,
+			0x76: 0x1D20,
+			0x77: 0x1D21,
+			0x7A: 0x1D22,
+			0x66: 0xA730,
+			0x73: 0xA731,
+			0x71: 0xA7AF,
+		}
+	},
+	{
 		key: 'circled',
 		name: 'Circled',
 		upperCase: 9398,
@@ -906,11 +938,13 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 		nonAsciiCharTimeStamp = -Infinity;
 	}, true);
 
+	let typingTimeStamp = -Infinity;
 	textEl.addEventListener('input', function (event) {
 		// HACK: Support typing umlauts etc. in Firefox on Android.
 		//       Chrome on Android produces a string consisting of the correct,
 		//       but rendering is broken.
-		if (event.timeStamp - nonAsciiCharTimeStamp < 25 && event.inputType === 'insertText') {
+		const { timeStamp, inputType } = event;
+		if (timeStamp - nonAsciiCharTimeStamp < 25 && inputType === 'insertText') {
 			nonAsciiCharTimeStamp = -Infinity;
 
 			const selStart = textEl.selectionStart;
@@ -926,6 +960,10 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 				const newPos = charStart + converted.length;
 				textEl.setSelectionRange(newPos, newPos);
 			}
+		}
+
+		if (inputType === 'insertText' || inputType === 'insertTranspose') {
+			typingTimeStamp = timeStamp;
 		}
 	}, true);
 
@@ -997,7 +1035,11 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 		}
 	}
 
-	textEl.addEventListener('selectionchange', updateFromCursor, false);
+	textEl.addEventListener('selectionchange', event => {
+		if (event.timeStamp - typingTimeStamp >= 25) {
+			updateFromCursor();
+		}
+	}, false);
 
 	{
 		const url = new URL(location.href);
