@@ -412,8 +412,21 @@ const definitionInits = [
 	},
 	{
 		key: 'doubleCircled',
-		name: 'Double Circled (0123456789)',
+		name: 'Double Circled (1234567890)',
 		digits: 0x24F5,
+		map: {
+			// no zero
+			48: 0x24FE,
+			49: 0x24F5,
+			50: 0x24F6,
+			51: 0x24F7,
+			52: 0x24F8,
+			53: 0x24F9,
+			54: 0x24FA,
+			55: 0x24FB,
+			56: 0x24FC,
+			57: 0x24FD,
+		}
 	},
 ];
 
