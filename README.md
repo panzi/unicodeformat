@@ -66,6 +66,7 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 🅂🅀🅄🄰🅁🄴🄳 | `squared` | | | | `Ctrl`+`Alt`+`0` |
 | 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳 | `negativeSquared` | | | | `Ctrl`+`Alt`+`1` |
 | 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟ | `parenthesized` | | | | `Ctrl`+`Alt`+`2` |
+| Segmented (🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹) | `segmented` | | | | `Ctrl`+`Alt`+`3` |
 
 ### Variant Parameter
 
@@ -92,6 +93,7 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 🅂🅀🅄🄰🅁🄴🄳[^5] | `squared` |
 | 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳[^4] | `negativeSquared` |
 | 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟[^6] | `parenthesized` |
+| Segmented (🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹)[^12] | `segmented` |
 
 [^1]: Includes support for all decimal numbers.
 [^2]: Uses Mathematical Bold as fallback for decimal numbers.
@@ -107,6 +109,7 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 [^11]: Only for lowercase letters not including x, though a small capital x
        would look like a normal lower case x anyway. Includes a handful of
        greek letters.
+[^12]: Digits only.
 
 ### Examples
 

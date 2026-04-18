@@ -404,7 +404,12 @@ const definitionInits = [
 			56: 9339,
 			57: 9340,
 		}
-	}
+	},
+	{
+		key: 'segmented',
+		name: 'Segmented (0123456789)',
+		digits: 0x1FBF0,
+	},
 ];
 
 /** @type {{[codepoint: number]: number}} */
