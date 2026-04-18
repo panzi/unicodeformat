@@ -410,6 +410,11 @@ const definitionInits = [
 		name: 'Segmented (0123456789)',
 		digits: 0x1FBF0,
 	},
+	{
+		key: 'doubleCircled',
+		name: 'Double Circled (0123456789)',
+		digits: 0x24F5,
+	},
 ];
 
 /** @type {{[codepoint: number]: number}} */
@@ -705,9 +710,9 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 
 	/** @param {string} text */
 	function insertText(text) {
-		const selStart = textEl.selectionStart ?? 0;
-		const selEnd = textEl.selectionEnd ?? 0;
 		const str = textEl.value;
+		const selStart = textEl.selectionStart ?? str.length;
+		const selEnd = textEl.selectionEnd ?? str.length;
 		textEl.value = str.slice(0, selStart) + text + str.slice(selEnd);
 		const newPos = selStart + text.length;
 		textEl.setSelectionRange(newPos, newPos);
@@ -715,6 +720,7 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 
 	zwSpcBtn.addEventListener('click', function (event) {
 		insertText('\u200B');
+		textEl.focus();
 	});
 
 	textEl.addEventListener('keydown', function (event) {

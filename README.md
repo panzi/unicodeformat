@@ -60,13 +60,14 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 𝖬𝖺𝗍𝗁𝖾𝗆𝖺𝗍𝗂𝖼𝖺𝗅 𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿 | `mathSans` | ✅ | ✅ | ✅ | `Ctrl`+`4` |
 | 𝙼𝚊𝚝𝚑𝚎𝚖𝚊𝚝𝚒𝚌𝚊𝚕 𝙼𝚘𝚗𝚘𝚜𝚙𝚊𝚌𝚎 | `mathMono` | | | | `Ctrl`+`5` |
 | Ｆｕｌｌｗｉｄｔｈ | `fullwidth` | | | | `Ctrl`+`6` |
-| Sᴍᴀʟʟ Cᴀᴘɪᴛᴀʟ Lᴇᴛᴛᴇʀꜱ | | | | `smallcaps` | `Ctrl`+`7` |
+| Sᴍᴀʟʟ Cᴀᴘɪᴛᴀʟ Lᴇᴛᴛᴇʀꜱ | `smallcaps` | | | | `Ctrl`+`7` |
 | Ⓒⓘⓡⓒⓛⓔⓓ | `circled` | | | | `Ctrl`+`8` |
 | 🅝🅔🅖🅐🅣🅘🅥🅔 🅒🅘🅡🅒🅛🅔🅓 | `negativeCircled` | | | | `Ctrl`+`9` |
 | 🅂🅀🅄🄰🅁🄴🄳 | `squared` | | | | `Ctrl`+`Alt`+`0` |
 | 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳 | `negativeSquared` | | | | `Ctrl`+`Alt`+`1` |
 | 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟ | `parenthesized` | | | | `Ctrl`+`Alt`+`2` |
 | Segmented (🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹) | `segmented` | | | | `Ctrl`+`Alt`+`3` |
+| Double Circled (⓵⓶⓷⓸⓹⓺⓻⓼⓽⓾) | `doubleCircled` | | | | `Ctrl`+`Alt`+`4` |
 
 ### Variant Parameter
 
@@ -94,6 +95,7 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳[^4] | `negativeSquared` |
 | 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟[^6] | `parenthesized` |
 | Segmented (🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹)[^12] | `segmented` |
+| Double Circled (⓵⓶⓷⓸⓹⓺⓻⓼⓽⓾)[^12] | `doubleCircled` |
 
 [^1]: Includes support for all decimal numbers.
 [^2]: Uses Mathematical Bold as fallback for decimal numbers.
