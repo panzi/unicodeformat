@@ -592,6 +592,8 @@ function init() {
 	const intentBtn = document.getElementById('intent-btn');
 	const intentUrlInput = document.getElementById('intent-url');
 	const zwSpcBtn = document.getElementById('zero-width-space-btn');
+	const lowerBtn = document.getElementById('to-lowercase-btn');
+	const upperBtn = document.getElementById('to-uppercase-btn');
 	const familyEl = document.getElementById('family');
 	const boldEl = document.getElementById('bold');
 	const italicEl = document.getElementById('italic');
@@ -626,6 +628,16 @@ function init() {
 		return;
 	}
 
+	if (!(lowerBtn instanceof HTMLButtonElement)) {
+		console.error('lowerBtn is not a HTMLButtonElement!', lowerBtn);
+		return;
+	}
+
+	if (!(upperBtn instanceof HTMLButtonElement)) {
+		console.error('upperBtn is not a HTMLButtonElement!', upperBtn);
+		return;
+	}
+
 	if (!(familyEl instanceof HTMLSelectElement)) {
 		console.error('familyEl is not a HTMLSelectElement!', familyEl);
 		return;
@@ -652,7 +664,7 @@ function init() {
 		}
 	});
 
-	initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn, familyEl, boldEl, italicEl);
+	initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn, familyEl, boldEl, italicEl, lowerBtn, upperBtn);
 }
 
 /**
@@ -665,8 +677,10 @@ function init() {
  * @param {HTMLSelectElement} familyEl
  * @param {HTMLInputElement} boldEl
  * @param {HTMLInputElement} italicEl
+ * @param {HTMLButtonElement} lowerBtn
+ * @param {HTMLButtonElement} upperBtn
  */
-function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn, familyEl, boldEl, italicEl) {
+function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwSpcBtn, familyEl, boldEl, italicEl, lowerBtn, upperBtn) {
 	for (let i = 0; i < groups.length; ++ i) {
 		const group = groups[i];
 		const hotkey = i > 9 ? `Ctrl+Alt+${i - 10}` : `Ctrl+${i}`;
@@ -691,6 +705,44 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 
 		textEl.focus();
 	}
+
+	const asciiDef = definitionMap.ascii;
+
+	function toUpperCase() {
+		const def = definitionMap[variantEl.value];
+		const selStart = textEl.selectionStart ?? 0;
+		const selEnd = textEl.selectionEnd ?? 0;
+		const str = textEl.value;
+
+		const selected = str.slice(selStart, selEnd);
+		const converted = convertStr(convertStr(selected, asciiDef).toUpperCase(), def);
+		textEl.value = str.slice(0, selStart) + converted + str.slice(selEnd);
+		textEl.setSelectionRange(selStart, selStart + converted.length);
+
+		textEl.focus();
+	}
+
+	function toLowerCase() {
+		const def = definitionMap[variantEl.value];
+		const selStart = textEl.selectionStart ?? 0;
+		const selEnd = textEl.selectionEnd ?? 0;
+		const str = textEl.value;
+
+		const selected = str.slice(selStart, selEnd);
+		const converted = convertStr(convertStr(selected, asciiDef).toLowerCase(), def);
+		textEl.value = str.slice(0, selStart) + converted + str.slice(selEnd);
+		textEl.setSelectionRange(selStart, selStart + converted.length);
+
+		textEl.focus();
+	}
+
+	lowerBtn.addEventListener('click', event => {
+		toLowerCase();
+	});
+
+	upperBtn.addEventListener('click', event => {
+		toUpperCase();
+	});
 
 	/**
 	 * @param {Definition} def 
@@ -828,6 +880,8 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 				case 'ArrowUp':
 				case 'i':
 				case 'b':
+				case 'u':
+				case 'l':
 					event.preventDefault();
 					event.stopPropagation();
 					break;
@@ -920,6 +974,18 @@ function initElements(variantEl, textEl, copyBtn, intentBtn, intentUrlInput, zwS
 						}
 						return;
 					}
+
+					case 'u':
+						event.preventDefault();
+						event.stopPropagation();
+						toUpperCase();
+						return;
+
+					case 'l':
+						event.preventDefault();
+						event.stopPropagation();
+						toLowerCase();
+						return;
 				}
 			} else {
 				switch (key) {

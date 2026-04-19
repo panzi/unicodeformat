@@ -182,7 +182,7 @@ select:hover {
 }
 
 .toggle:checked {
-    padding: 9px 7px 7px 9px;
+    padding: 10px 6px 6px 10px;
     background-color: var(--button-active-background-color);
 }
 

@@ -26,6 +26,8 @@ Hotkeys
 | `Ctrl`+`Alt`+`0` ... `Ctrl`+`Alt`+`1` | Select family 11 to 12. |
 | `Ctrl`+`B` | Toggle bold. |
 | `Ctrl`+`I` | Toggle italic. |
+| `Ctrl`+`U` | Selection to upper case. |
+| `Ctrl`+`L` | Selection to lower case. |
 | `Ctrl`+`ArrowDown` | Select next family. |
 | `Ctrl`+`ArrowUp` | Select previous family. |
 | `Ctrl`+`Alt`+`C` | Copy whole text to clipboard. |
