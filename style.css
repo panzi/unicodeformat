@@ -179,6 +179,7 @@ select:hover {
 
 .toggle {
     appearance: none;
+    transition: padding ease-in-out 50ms;
 }
 
 .toggle:checked {
