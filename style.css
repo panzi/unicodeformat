@@ -235,3 +235,12 @@ textarea:disabled {
 .foot form {
     display: inline;
 }
+
+small {
+    margin-top: 0.5rem;
+    display: block;
+    text-align: center;
+    opacity: 0.5;
+
+    display: none;
+}
