@@ -22,8 +22,8 @@ Hotkeys
 
 | Hotkey | Description |
 | :----- | :---------- |
-| `Ctrl`+`0` ... `Ctrl`+`9` | Select family 1 to 10. |
-| `Ctrl`+`Alt`+`0` ... `Ctrl`+`Alt`+`1` | Select family 11 to 12. |
+| `Ctrl`+`0` ... `Ctrl`+`9` | Select family 1 to 10. See [below](#family-parameter) for what families there are. |
+| `Ctrl`+`Alt`+`0` ... `Ctrl`+`Alt`+`4` | Select family 11 to 15. |
 | `Ctrl`+`B` | Toggle bold. |
 | `Ctrl`+`I` | Toggle italic. |
 | `Ctrl`+`U` | Selection to upper case. |
