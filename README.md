@@ -97,14 +97,14 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 | 🅽🅴🅶🅰🆃🅸🆅🅴 🆂🆀🆄🅰🆁🅴🅳[^4] | `negativeSquared` |
 | 🄟⒜⒭⒠⒩⒯⒣⒠⒮⒤⒵⒠⒟[^6] | `parenthesized` |
 | Segmented (🯰🯱🯲🯳🯴🯵🯶🯷🯸🯹)[^12] | `segmented` |
-| Double Circled (⓵⓶⓷⓸⓹⓺⓻⓼⓽⓾)[^12] | `doubleCircled` |
+| Double Circled (⓵⓶⓷⓸⓹⓺⓻⓼⓽⓾)[^13] | `doubleCircled` |
 
 [^1]: Includes support for all decimal numbers.
 [^2]: Uses Mathematical Bold as fallback for decimal numbers.
 [^3]: Uses Mathematical Sans-Serif as fallback for decimal numbers.
 [^4]: Uses Mathematical Sans-Serif Bold as fallback for decimal numbers.
 [^5]: Upper-case letters only.
-[^6]: Includes support for decimal numbers except 0.
+[^6]: Includes support for decimal numbers except 0, which is mapped to ⑽.
 [^7]: The lower-case h might look a bit different then the other letters,
       because it is the re-purposed Plank constant (ℎ).
 [^8]: Uses "Black-Letter" to for the missing letters (C, H, I, R, Z).
@@ -113,7 +113,8 @@ groups.forEach((d,i) => console.log('|',convertStr(d.name,definitionMap[d.key]),
 [^11]: Only for lowercase letters not including x, though a small capital x
        would look like a normal lower case x anyway. Includes a handful of
        greek letters.
-[^12]: Digits only.
+[^12]: Decimal digits only.
+[^13]: Decimal digits only, except for 0, which is mapped to ⓾.
 
 ### Examples
 

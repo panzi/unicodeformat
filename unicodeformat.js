@@ -403,7 +403,8 @@ const definitionInits = [
 		lowerCase: 9372,
 		upperCase: 127248,
 		map: {
-			// no zero
+			// no zero, (10) as zero
+			48: 9341,
 			49: 9332,
 			50: 9333,
 			51: 9334,
@@ -425,7 +426,7 @@ const definitionInits = [
 		name: 'Double Circled (1234567890)',
 		digits: 0x24F5,
 		map: {
-			// no zero
+			// no zero, ((10)) as zero
 			48: 0x24FE,
 			49: 0x24F5,
 			50: 0x24F6,
