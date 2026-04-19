@@ -17,11 +17,9 @@ function convertStr(str, definition) {
 
 		/** @type {number} */
 		let converted = codePoint;
-		if (codePoint in TO_ASCII) {
-			const ascii = TO_ASCII[codePoint];
-			if (ascii in map) {
-				converted = map[ascii];
-			}
+		const ascii = codePoint in TO_ASCII ? TO_ASCII[codePoint] : codePoint;
+		if (ascii in map) {
+			converted = map[ascii];
 		}
 
 		codePoints.push(converted);
@@ -53,10 +51,10 @@ const ASCII = {
 	italic: 'mathItalic',
 	boldItalic: 'mathBoldItalic',
 	map: /** @type {{[codepoint: number]: number}} */ ({
-		0x03DC: 0x03DC,
-		0x03DD: 0x03DD,
-		0x2207: 0x2207,
-		0x03A2: 0x03F4, // Theta is not in the block but seperate!
+		0x03DC: 0x03DC, // Ϝ greek letter digamma
+		0x03DD: 0x03DD, // ϝ greek small letter digamma
+		0x2207: 0x2207, // Nabla
+		0x03F4: 0x03F4, // Theta is not in the block but seperate!
 	}),
 };
 
@@ -141,7 +139,7 @@ const definitionInits = [
 			0x68:    0x210E, // h
 			0x131:  0x1D6A4, // ı
 			0x237:  0x1D6A5, // ȷ
-			0x2207: 0x1D6fD, // Nabla
+			0x2207: 0x1D6FB, // Nabla
 		},
 		isItalic: true,
 		regular: 'ascii',
@@ -555,22 +553,22 @@ for (let i = definitionInits.length - 1; i >= 0; -- i) {
 
 	// map overwrites ranges
 	if (initMap) {
-		for (let asciiStr in initMap) {
+		for (const asciiStr in initMap) {
 			const ascii = +asciiStr;
-			const value = initMap[ascii];
+			const value = initMap[asciiStr];
 			TO_ASCII[value] = ascii;
 			map[asciiStr] = value;
 		}
 	}
 
 	if (space !== undefined) {
-		TO_ASCII[space] = ASCII.space;
-		map[ASCII.space] = space;
+		const ascii = ASCII.space;
+		TO_ASCII[space] = ascii;
+		map[ascii] = space;
 	}
 
 	for (const asciiStr in map) {
-		const ascii = +asciiStr;
-		definitionMap[map[ascii]] = def;
+		definitionMap[map[asciiStr]] = def;
 	}
 }
 definitions.reverse();
